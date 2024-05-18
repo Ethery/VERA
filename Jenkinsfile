@@ -14,7 +14,7 @@ pipeline {
 				buildName "${BUILD_NUMBER}(${GIT_COMMIT})"
 				writeFile(file: "Unity/Assets/StreamingAssets/version.txt", text: "${BUILD_NUMBER}.${GIT_COMMIT}")
 				writeFile(file: "Unity/Assets/StreamingAssets/ActiveEnvironment.txt", text: "Main")
-				sh '/opt/Unity/Editor/${UNITY_VERSION}/Editor/Unity -quit -accept-apiupdate -nographics -batchmode -logFile - -projectPath "${WORKSPACE}"'
+				sh '/opt/Unity/Editor/${UNITY_VERSION}/Editor/Unity -quit -accept-apiupdate -nographics -batchmode -logFile - -projectPath "${WORKSPACE}/Unity"'
 			}
 		}
 		stage('Build Unity') {
