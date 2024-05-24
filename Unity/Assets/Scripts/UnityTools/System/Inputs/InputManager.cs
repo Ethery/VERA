@@ -8,6 +8,7 @@ using UnityEngine.InputSystem.UI;
 namespace UnityTools.Systems.Inputs
 {
 	[RequireComponent(typeof(BaseInputModule))]
+	[RequireComponent(typeof(PlayerInput))]
 	public class InputManager : Singleton<InputManager>
 	{
 		#region Classes
@@ -151,6 +152,8 @@ namespace UnityTools.Systems.Inputs
 				}
 			}
 
+			//Ensure assets are the same.
+			GetComponent<PlayerInput>().actions = asset;
 			GetComponent<PlayerInput>().onActionTriggered += OnActionTriggered;
 		}
 
