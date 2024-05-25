@@ -26,7 +26,7 @@ pipeline {
 		stage('Create archive') {
 			steps {
 				sh '''cd ${WORKSPACE_TMP}
-				zip -r ${WORKSPACE}/Game.zip Game'''
+				zip -r ${WORKSPACE}/${BUILD_TAG}_Game.zip Game'''
 			}
 		}
 	}
