@@ -132,11 +132,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 42070041}
+  - component: {fileID: 42070043}
   - component: {fileID: 42070040}
   - component: {fileID: 42070039}
   - component: {fileID: 42070038}
   - component: {fileID: 42070042}
-  - component: {fileID: 42070043}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -240,7 +240,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42070037}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08334d0ea5f364e4e9939eb8afec0c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_speed: 5
   m_moveInput:
     m_name: Player Move
     m_mapName: General
@@ -374,7 +375,7 @@ Transform:
   m_GameObject: {fileID: 48409307}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.09, z: 0}
   m_LocalScale: {x: 6.4712, y: 6.4712, z: 6.4712}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -681,13 +682,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6774667, y: 0, z: 0, w: 0.73555344}
-  m_LocalPosition: {x: 0, y: 30, z: 0}
+  m_LocalRotation: {x: 0.5168973, y: -0, z: -0, w: 0.85604745}
+  m_LocalPosition: {x: 0, y: 24.3, z: -13.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 85.292, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 62.249, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -9,9 +9,9 @@
                     "name": "Player Move",
                     "type": "Value",
                     "id": "2ad3babc-e9e0-48a3-94f2-698e4b121f2f",
-                    "expectedControlType": "Vector2",
-                    "processors": "NormalizeVector2,StickDeadzone",
-                    "interactions": "Hold",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": true
                 }
             ],

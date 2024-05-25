@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityTools.Systems.Inputs;
 
-public class Character : MonoBehaviour
+public class Character : Entity
 {
 	// Start is called before the first frame update
 	void Start()
 	{
-		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Started, InputActionPhase.Started), true);
-		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Performed, InputActionPhase.Canceled), true);
+		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Performed, InputActionPhase.Performed), true);
+		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Canceled, InputActionPhase.Canceled), true);
 	}
 
 	// Update is called once per frame
@@ -23,20 +23,18 @@ public class Character : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Started, InputActionPhase.Started), false);
-		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Performed, InputActionPhase.Canceled), false);
-	}
-
-	public void OnMoveInput_Started(InputAction inputAction)
-	{
-		Vector2 inputDirection = inputAction.ReadValue<Vector2>();
-		m_moveDirection = m_speed * new Vector3(inputDirection.x, 0, inputDirection.y);
-		Debug.Log($"Start {inputDirection}");
+		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Performed, InputActionPhase.Performed), false);
+		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Canceled, InputActionPhase.Canceled), false);
 	}
 
 	public void OnMoveInput_Performed(InputAction inputAction)
 	{
-		Debug.Log($"Performed");
+		Vector2 inputDirection = inputAction.ReadValue<Vector2>();
+		m_moveDirection = m_speed * new Vector3(inputDirection.x, 0, inputDirection.y);
+	}
+
+	public void OnMoveInput_Canceled(InputAction inputAction)
+	{
 		m_moveDirection = Vector3.zero;
 	}
 
