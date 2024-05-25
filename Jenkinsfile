@@ -32,7 +32,7 @@ pipeline {
 	}
     post {
         always {
-            archiveArtifacts artifacts: '${BUILD_TAG}_Game.zip', fingerprint: true, onlyIfSuccessful: true
+            archiveArtifacts artifacts: '*_Game.zip', fingerprint: true, onlyIfSuccessful: true
         }
     }
 }
