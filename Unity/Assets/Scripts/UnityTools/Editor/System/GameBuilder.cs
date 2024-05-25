@@ -36,15 +36,21 @@ public static class GameBuilder
 	private static void BuildWindows(string buildPath)
 	{
 		// Setup build options (e.g. scenes, build output location)
+		string[] scenesPath = new string[EditorBuildSettings.scenes.Length];
+		for(int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+		{
+			EditorBuildSettingsScene scene = EditorBuildSettings.scenes[i];
+			scenesPath[i] = scene.path;
+		}
 
-		BuildPlayerOptions options = BuildPlayerWindow.DefaultBuildMethods.GetBuildPlayerOptions(new BuildPlayerOptions());
+		var options = new BuildPlayerOptions
 		{
 			// Change to location the output should go
-			options.locationPathName = $"{buildPath}/Game/Game.exe";
-			options.options = BuildOptions.CleanBuildCache | BuildOptions.StrictMode;
-			options.target = BuildTarget.StandaloneWindows64;
-		}
-		;
+			locationPathName = $"{buildPath}/Game/Game.exe",
+			scenes = scenesPath,
+			options = BuildOptions.CleanBuildCache | BuildOptions.StrictMode,
+			target = BuildTarget.StandaloneWindows64
+		};
 		var report = BuildPipeline.BuildPlayer(options);
 
 		if(report.summary.result == BuildResult.Succeeded)
