@@ -9,14 +9,13 @@ using UnityTools.Systems.Inputs;
 public class Character : Entity
 {
 	// Start is called before the first frame update
-	void Start()
+	private void Start()
 	{
 		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Performed, InputActionPhase.Performed), true);
 		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Canceled, InputActionPhase.Canceled), true);
 	}
 
-	// Update is called once per frame
-	void LateUpdate()
+	private void LateUpdate()
 	{
 		GetComponent<Rigidbody>().velocity = m_moveDirection;
 	}
