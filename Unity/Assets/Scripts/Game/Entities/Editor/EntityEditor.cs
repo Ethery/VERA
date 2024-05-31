@@ -7,10 +7,26 @@ public partial class Entity
 {
 	public void GatherProperties()
 	{
+		if(m_properties == null)
+			m_properties = new List<EntityProperty>();
 		GetComponentsInChildren(m_properties);
 		foreach(EntityProperty property in m_properties)
 		{
 			property.Entity = this;
+		}
+	}
+
+	public void ResetProperties()
+	{
+		if(m_properties != null)
+		{
+			foreach(EntityProperty property in m_properties)
+			{
+				if(property != null)
+				{
+					property.Entity = null;
+				}
+			}
 		}
 	}
 
@@ -26,25 +42,41 @@ public partial class Entity
 		{
 			for(int i = 0; i < stream.length; i++)
 			{
+				Entity entity = null;
 				switch(stream.GetEventType(i))
 				{
-					case ObjectChangeKind.ChangeGameObjectOrComponentProperties:
-						stream.GetChangeGameObjectOrComponentPropertiesEvent(i, out ChangeGameObjectOrComponentPropertiesEventArgs data);
+					case ObjectChangeKind.ChangeGameObjectStructure:
+					{
+						stream.GetChangeGameObjectStructureEvent(i, out ChangeGameObjectStructureEventArgs data);
 
-						Entity entity = null;
-						//EntityProperty changed
-						EntityProperty entityProperty = EditorUtility.InstanceIDToObject(data.instanceId) as EntityProperty;
-						if(entityProperty != null)
-						{
-							entity = entityProperty.GetComponentInParent<Entity>();
-						}
-						else
-						{
-							entity = EditorUtility.InstanceIDToObject(data.instanceId) as Entity;
-						}
-						GatherPropertiesOnEntity(entity);
+						GameObject entityObjectChanged = EditorUtility.InstanceIDToObject(data.instanceId) as GameObject;
+
+						entity = entityObjectChanged.GetComponentInParent<Entity>();
+
 						break;
+					}
+					case ObjectChangeKind.ChangeGameObjectParent:
+					{
+						stream.GetChangeGameObjectParentEvent(i, out ChangeGameObjectParentEventArgs data);
+
+						GameObject entityObjectChanged = EditorUtility.InstanceIDToObject(data.instanceId) as GameObject;
+
+						entity = entityObjectChanged.GetComponentInParent<Entity>();
+
+						break;
+					}
+					case ObjectChangeKind.ChangeGameObjectStructureHierarchy:
+					{
+						stream.GetChangeGameObjectStructureHierarchyEvent(i, out ChangeGameObjectStructureHierarchyEventArgs data);
+
+						GameObject entityObjectChanged = EditorUtility.InstanceIDToObject(data.instanceId) as GameObject;
+
+						entity = entityObjectChanged.GetComponentInParent<Entity>();
+
+						break;
+					}
 				}
+				GatherPropertiesOnEntity(entity);
 			}
 		}
 
@@ -52,6 +84,7 @@ public partial class Entity
 		{
 			if(entity != null)
 			{
+				entity.ResetProperties();
 				entity.GatherProperties();
 			}
 		}

@@ -20,6 +20,6 @@ public abstract class EntityProperty : MonoBehaviour
 		}
 	}
 
-
+	[SerializeField]
 	private Entity m_entity;
 }

@@ -12,6 +12,11 @@ public partial class Entity : MonoBehaviour
 		return null;
 	}
 
+	public bool TryGetProperty<T>(out T property) where T : EntityProperty
+	{
+		return TryGetComponent(out property);
+	}
+
 	[SerializeField]
 	private List<EntityProperty> m_properties;
 }

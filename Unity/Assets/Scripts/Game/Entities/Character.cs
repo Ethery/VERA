@@ -17,7 +17,12 @@ public class Character : Entity
 
 	private void LateUpdate()
 	{
+		m_moveDirection.y = GetComponent<Rigidbody>().velocity.y;
 		GetComponent<Rigidbody>().velocity = m_moveDirection;
+		if(m_moveDirection != Vector3.zero)
+		{
+			transform.forward = m_moveDirection;
+		}
 	}
 
 	private void OnDestroy()
