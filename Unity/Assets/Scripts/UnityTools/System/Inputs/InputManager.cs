@@ -121,12 +121,12 @@ namespace UnityTools.Systems.Inputs
 					}
 					else
 					{
-						UnityEngine.Debug.LogError($"Can't remove an inexistant event in {input.MapName}{input.Name} event List");
+						UnityEngine.Debug.LogError($"Can't remove an inexistant event in {input} event List");
 					}
 				}
 				else
 				{
-					UnityEngine.Debug.LogError($"Can't remove an inexistant event for {input.MapName}{input.Name}");
+					UnityEngine.Debug.LogError($"Can't remove an inexistant event for {input}");
 				}
 			}
 		}
@@ -152,8 +152,6 @@ namespace UnityTools.Systems.Inputs
 				}
 			}
 
-			//Ensure assets are the same.
-			GetComponent<PlayerInput>().actions = asset;
 			GetComponent<PlayerInput>().onActionTriggered += OnActionTriggered;
 		}
 
@@ -161,6 +159,7 @@ namespace UnityTools.Systems.Inputs
 		{
 			if(IsMouseOnUI())
 				return;
+
 			if(m_inputs.ContainsKey(obj.action.name))
 			{
 				Input input = m_inputs[obj.action.name];
@@ -168,7 +167,7 @@ namespace UnityTools.Systems.Inputs
 				{
 					foreach(InputEvent eventToCall in m_events[input])
 					{
-						if(eventToCall.EventType.HasFlag(obj.phase))
+						if(eventToCall.EventType == obj.phase)
 						{
 							eventToCall.Callback(obj.action);
 						}
