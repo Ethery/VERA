@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityTools.Systems.Inputs;
 
-public class Character : Entity
+public class InputControl : EntityProperty
 {
+	public static float COMPARISON_EPSILON = 0.00001f;
+
 	// Start is called before the first frame update
 	private void Start()
 	{
@@ -16,11 +18,13 @@ public class Character : Entity
 
 	private void LateUpdate()
 	{
-		m_moveDirection.y = GetComponent<Rigidbody>().velocity.y;
-		GetComponent<Rigidbody>().velocity = m_moveDirection * (m_sprinting ? m_sprintSpeed : m_speed);
-		if(m_moveDirection != Vector3.zero)
+		Vector3 velocity = m_moveDirection * (m_sprinting ? m_sprintSpeed : m_speed);
+		velocity.y = Entity.GetComponent<Rigidbody>().velocity.y;
+		Entity.GetComponent<Rigidbody>().velocity = velocity;
+
+		if(m_moveDirection.sqrMagnitude > COMPARISON_EPSILON * COMPARISON_EPSILON)
 		{
-			transform.forward = m_moveDirection;
+			Entity.transform.forward = m_moveDirection;
 		}
 	}
 
