@@ -10,9 +10,12 @@ public class AiEntityProperty : EntityProperty
 {
 	private void Update()
 	{
-		m_behaviourTree.Execute();
+		m_behaviourTree.Execute(m_blackboard);
 	}
 
 	[SerializeField]
 	protected BehaviourTree m_behaviourTree = null;
+
+	[SerializeField]
+	private Blackboard m_blackboard;
 }
