@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEditor;
 
-public class BehaviourTree : MonoBehaviour
+namespace UnityTools.AI.BehaviourTree.Editor
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[CustomPropertyDrawer(typeof(BehaviourTree))]
+	public class BehaviourTreeDrawer : PropertyDrawer
+	{
+		// Start is called before the first frame update
+		void Start()
+		{
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		}
+
+		// Update is called once per frame
+		void Update()
+		{
+
+		}
+	}
 }
