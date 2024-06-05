@@ -1,20 +1,15 @@
 using UnityEditor;
+using UnityEngine;
 
-namespace UnityTools.AI.BehaviourTree.Editor
+namespace UnityTools.AI.BehaviourTree
 {
-	[CustomPropertyDrawer(typeof(BehaviourTree))]
-	public class BehaviourTreeDrawer : PropertyDrawer
+	[CustomPropertyDrawer(typeof(BehaviourTreePicker))]
+	public class BehaviourTreePickerDrawer : PropertyDrawer
 	{
-		// Start is called before the first frame update
-		void Start()
+		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 		{
-
-		}
-
-		// Update is called once per frame
-		void Update()
-		{
-
+			SerializedProperty typeProperty = property.FindPropertyRelative(BehaviourTreePicker.BEHAVIOUR_TREE_FIELDNAME);
+			Debug.Log(typeProperty != null ? typeProperty.ToString() : "null");
 		}
 	}
 }
