@@ -9,7 +9,24 @@ public class ClientBehaviourTree : BehaviourTree
 		{
 			Sequence root = new Sequence();
 
-			root.Subtasks.Add(new LogTask());
+			root.Subtasks.Add(new LogTask("Trouve table"));
+			root.Subtasks.Add(new LogTask("mange repas"));
+			root.Subtasks.Add(new LogTask("paye connar"));
+
+			return root;
+		}
+	}
+}
+
+public class Client2BehaviourTree : BehaviourTree
+{
+	public override Task Root
+	{
+		get
+		{
+			Sequence root = new Sequence();
+
+			root.Subtasks.Add(new LogTask("test02"));
 
 			return root;
 		}

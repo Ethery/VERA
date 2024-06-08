@@ -6,9 +6,14 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 	[Serializable]
 	public class LogTask : Task
 	{
+		public LogTask(string logMessage)
+		{
+			m_logMessage = logMessage;
+		}
+
 		public override ETaskStatus Tick(Blackboard blackboard)
 		{
-			Debug.Log($"m_logMessage");
+			Debug.Log($"Log : {m_logMessage}");
 			return ETaskStatus.Success;
 		}
 
