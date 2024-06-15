@@ -7,28 +7,13 @@ public class ClientBehaviourTree : BehaviourTree
 	{
 		get
 		{
-			Sequence root = new Sequence();
+			Sequence rootSequence = new Sequence();
 
-			root.Subtasks.Add(new LogTask("Trouve table"));
-			root.Subtasks.Add(new LogTask("mange repas"));
-			root.Subtasks.Add(new LogTask("paye connar"));
+			//Find table
+			rootSequence.SubTasks.Add(new SetEntityWithIdentifierInBlackBoard("Table", "Table"));
+			rootSequence.SubTasks.Add(new WaitForPlayerInteraction());
 
-			return root;
-		}
-	}
-}
-
-public class Client2BehaviourTree : BehaviourTree
-{
-	public override Task Root
-	{
-		get
-		{
-			Sequence root = new Sequence();
-
-			root.Subtasks.Add(new LogTask("test02"));
-
-			return root;
+			return rootSequence;
 		}
 	}
 }

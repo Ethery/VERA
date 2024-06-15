@@ -13,9 +13,10 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 	{
 		public sealed override ETaskStatus Tick(Blackboard blackboard)
 		{
-			for(int i = 0; i < Subtasks.Count; ++i)
+			for(int i = 0; i < SubTasks.Count; ++i)
 			{
-				ETaskStatus subTaskStatus = Subtasks[i].Tick(blackboard);
+				ETaskStatus subTaskStatus = SubTasks[i].Tick(blackboard);
+				Debug.Log($"Task{SubTasks[i].GetType().Name} finished with status {subTaskStatus}");
 				if(subTaskStatus == ETaskStatus.Running)
 				{
 					return ETaskStatus.Running;
@@ -29,6 +30,6 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 		}
 
 		[SerializeField]
-		public List<Task> Subtasks = new List<Task>();
+		public List<Task> SubTasks = new List<Task>();
 	}
 }

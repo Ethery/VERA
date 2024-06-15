@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityTools.AI.BehaviourTree;
 
 namespace UnityTools.AI.BehaviourTree.Tasks
@@ -10,13 +11,14 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 	[Serializable]
 	public class Selector : Task
 	{
-		public List<Task> Subtasks = new List<Task>();
+		public List<Task> SubTasks = new List<Task>();
 
 		public sealed override ETaskStatus Tick(Blackboard blackboard)
 		{
-			for(int i = 0; i < Subtasks.Count; ++i)
+			for(int i = 0; i < SubTasks.Count; ++i)
 			{
-				ETaskStatus subTaskStatus = Subtasks[i].Tick(blackboard);
+				ETaskStatus subTaskStatus = SubTasks[i].Tick(blackboard);
+				Debug.Log($"Task{SubTasks[i].GetType().Name} finished with status {subTaskStatus}");
 				if(subTaskStatus == ETaskStatus.Running)
 				{
 					return ETaskStatus.Running;

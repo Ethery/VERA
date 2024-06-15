@@ -7,14 +7,26 @@ public partial class Entity : MonoBehaviour
 {
 	public T GetProperty<T>() where T : EntityProperty
 	{
-		if(TryGetComponent<T>(out T property))
-			return property;
+		foreach(EntityProperty property in m_properties)
+		{
+			if(property is T propertyAsT)
+				return propertyAsT;
+		}
 		return null;
 	}
 
-	public bool TryGetProperty<T>(out T property) where T : EntityProperty
+	public bool TryGetProperty<T>(out T outProperty) where T : EntityProperty
 	{
-		return TryGetComponent(out property);
+		foreach(EntityProperty property in m_properties)
+		{
+			if(property is T propertyAsT)
+			{
+				outProperty = propertyAsT;
+				return true;
+			}
+		}
+		outProperty = null;
+		return false;
 	}
 
 	[SerializeField]

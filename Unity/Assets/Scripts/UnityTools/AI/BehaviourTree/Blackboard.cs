@@ -12,23 +12,26 @@ namespace UnityTools.AI.BehaviourTree
 		[Serializable]
 		public struct BlackboardValue
 		{
+			public BlackboardValue(string key, object value)
+			{
+				Key = key;
+				Value = value;
+			}
+
 			public string Key;
 			public object Value;
 		}
 
 		public T GetValue<T>(string key) where T : class
 		{
-			foreach(BlackboardValue value in Values)
+			if(Values.TryGetValue(key, out object value))
 			{
-				if(value.Key == key && value.Value.GetType().IsAssignableFrom(typeof(T)))
-				{
-					return key as T;
-				}
+				if(value.GetType().IsAssignableFrom(typeof(T)))
+					return value as T;
 			}
 			return default(T);
 		}
 
-		[SerializeField]
-		public List<BlackboardValue> Values = new List<BlackboardValue>();
+		public Dictionary<string, object> Values = new Dictionary<string, object>();
 	}
 }
