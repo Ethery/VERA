@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Xml.Linq;
 using UnityEngine;
 
 namespace UnityTools.AI.BehaviourTree
@@ -12,12 +11,12 @@ namespace UnityTools.AI.BehaviourTree
 
 		public BehaviourTree GetBehaviourTree()
 		{
-			if(m_behaviourTree == null)
+			if (m_behaviourTree == null)
 			{
-				foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies().Reverse())
+				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies().Reverse())
 				{
 					Type tt = assembly.GetType(typeName);
-					if(tt != null)
+					if (tt != null)
 					{
 						m_behaviourTree = Activator.CreateInstance(tt) as BehaviourTree;
 					}

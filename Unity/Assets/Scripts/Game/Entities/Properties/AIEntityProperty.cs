@@ -5,6 +5,8 @@ public class AiEntityProperty : EntityProperty
 {
 	public const string THIS_BLACKBOARD_IDENTIFIER = "ThisEntity";
 
+	public BehaviourTree BehaviourTree => m_behaviourTree.GetBehaviourTree();
+
 	private void Start()
 	{
 		m_blackboard = new Blackboard();

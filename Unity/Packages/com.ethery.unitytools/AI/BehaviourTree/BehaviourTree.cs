@@ -17,6 +17,16 @@ namespace UnityTools.AI.BehaviourTree
 			}
 			return Root.Tick(blackboard);
 		}
+
+#if UNITY_EDITOR
+		public void OnInspectorGUI()
+		{
+			if (Root != null)
+			{
+				Root.OnInspectorGUI();
+			}
+		}
+#endif
 	}
 
 }

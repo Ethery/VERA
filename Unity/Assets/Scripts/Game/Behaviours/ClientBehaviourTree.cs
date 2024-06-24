@@ -7,13 +7,20 @@ public class ClientBehaviourTree : BehaviourTree
 	{
 		get
 		{
-			Sequence rootSequence = new Sequence();
+			if (m_root == null)
+			{
 
-			//Find table
-			rootSequence.SubTasks.Add(new SetEntityWithIdentifierInBlackBoard("Table", "Table"));
-			rootSequence.SubTasks.Add(new WaitForPlayerInteraction());
+				Sequence rootSequence = new Sequence();
 
-			return rootSequence;
+				//Find table
+				rootSequence.SubTasks.Add(new SetEntityWithIdentifierInBlackBoard("Table", "Table"));
+				rootSequence.SubTasks.Add(new WaitForPlayerInteraction());
+				rootSequence.SubTasks.Add(new LogTask("Interaction success"));
+				m_root = rootSequence;
+			}
+			return m_root;
 		}
 	}
+
+	private Task m_root = null;
 }

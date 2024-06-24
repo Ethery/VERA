@@ -14,13 +14,15 @@ namespace UnityTools.AI.BehaviourTree
 	}
 
 	[Serializable]
-	public class Task
+	public abstract class Task
 	{
-		public virtual ETaskStatus Tick(Blackboard blackboard)
-		{
-			return ETaskStatus.Success;
-		}
+		public abstract ETaskStatus Tick(Blackboard blackboard);
 
-		public int v;
+#if UNITY_EDITOR
+		public virtual void OnInspectorGUI()
+		{
+			UnityEditor.EditorGUILayout.LabelField(this.GetType().Name);
+		}
+#endif
 	}
 }

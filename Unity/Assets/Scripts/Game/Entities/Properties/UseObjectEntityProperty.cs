@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,23 +21,24 @@ public class UseObjectEntityProperty : EntityProperty
 	{
 		Usable closestUsable = null;
 		float minDistance = float.MaxValue;
-		foreach(KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
+		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
 		{
-			if(kvp.Value < minDistance)
+			if (kvp.Value < minDistance)
 			{
 				closestUsable = kvp.Key;
 				minDistance = kvp.Value;
 			}
 		}
-		if(closestUsable != null)
+		if (closestUsable != null)
 		{
-			closestUsable.Use();
+			Debug.Log($"Using {closestUsable.Entity} from {Entity}");
+			closestUsable.Use(Entity);
 		}
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable))
 		{
 			m_availableUsablesSqrRanges.Add(Usable, (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude);
 		}
@@ -47,9 +46,9 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnTriggerStay(Collider other)
 	{
-		if(other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable))
 		{
-			if(m_availableUsablesSqrRanges.ContainsKey(Usable))
+			if (m_availableUsablesSqrRanges.ContainsKey(Usable))
 			{
 				m_availableUsablesSqrRanges[Usable] = (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude;
 			}
@@ -58,7 +57,7 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnTriggerExit(Collider other)
 	{
-		if(other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable))
 		{
 			m_availableUsablesSqrRanges.Remove(Usable);
 		}
