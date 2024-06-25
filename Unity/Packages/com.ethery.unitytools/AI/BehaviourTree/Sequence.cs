@@ -39,7 +39,6 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			UnityEditor.EditorGUI.indentLevel++;
 			for (int i = 0; i < SubTasks.Count; ++i)
 			{
-				UnityEditor.EditorGUILayout.BeginHorizontal();
 				if (m_taskStatuses.ContainsKey(SubTasks[i]))
 				{
 					UnityEditor.EditorGUILayout.LabelField(m_taskStatuses[SubTasks[i]].ToString());
@@ -50,7 +49,6 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 				}
 
 				SubTasks[i].OnInspectorGUI();
-				UnityEditor.EditorGUILayout.EndHorizontal();
 			}
 			UnityEditor.EditorGUI.indentLevel--;
 		}

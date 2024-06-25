@@ -1,47 +1,17 @@
-﻿using UnityEngine;
-using UnityTools.AI.BehaviourTree;
+﻿using UnityTools.AI.BehaviourTree;
+using UnityTools.AI.BehaviourTree.Tasks;
 
-public class WaitForPlayerInteraction : Task
+public class WaitForPlayerInteraction : IfElseCondition
 {
-	private enum TaskState
+	public WaitForPlayerInteraction(Task trueTask, Task falseTask) : base(trueTask, falseTask)
 	{
-		Begin,
-		WaitingForPlayer,
-		Finished,
+		ConditionFunction = IsUsed;
 	}
 
-	public override ETaskStatus Tick(Blackboard blackboard)
+	private bool IsUsed(Blackboard blackboard)
 	{
-		switch (m_currentState)
-		{
-			case TaskState.Begin:
-				{
-					if (m_thisEntity == null)
-					{
-						m_thisEntity = blackboard.GetValue<Entity>(AiEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
-					}
-
-					if (m_thisEntity != null)
-					{
-						m_thisEntity.GetProperty<Usable>().OnUse += OnPlayerInteracted;
-						m_currentState = TaskState.WaitingForPlayer;
-					}
-					return ETaskStatus.Running;
-				}
-			case TaskState.WaitingForPlayer:
-				return ETaskStatus.Running;
-			case TaskState.Finished:
-				return ETaskStatus.Success;
-		}
-		return ETaskStatus.Failed;
+		Entity thisEntity = blackboard.GetValue<Entity>(AiEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
+		return thisEntity.GetProperty<Usable>().IsUsed;
 	}
 
-	private void OnPlayerInteracted(Entity user)
-	{
-		Debug.Log($"{m_thisEntity} has been used by {user}");
-		m_currentState = TaskState.Finished;
-	}
-
-	private TaskState m_currentState;
-	private Entity m_thisEntity;
 }

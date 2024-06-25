@@ -14,7 +14,7 @@ public class ClientBehaviourTree : BehaviourTree
 
 				//Find table
 				rootSequence.SubTasks.Add(new SetEntityWithIdentifierInBlackBoard("Table", "Table"));
-				rootSequence.SubTasks.Add(new WaitForPlayerInteraction());
+				rootSequence.SubTasks.Add(new WaitForPlayerInteraction(new LogTask("Interacted true"), new LogTask("Interacted false")));
 				rootSequence.SubTasks.Add(new LogTask("Interaction success"));
 				m_root = rootSequence;
 			}

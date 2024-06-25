@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace UnityTools.AI.BehaviourTree
 {
@@ -22,12 +18,12 @@ namespace UnityTools.AI.BehaviourTree
 			public object Value;
 		}
 
-		public T GetValue<T>(string key) where T : class
+		public T GetValue<T>(string key)
 		{
-			if(Values.TryGetValue(key, out object value))
+			if (Values.TryGetValue(key, out object value))
 			{
-				if(value.GetType().IsAssignableFrom(typeof(T)))
-					return value as T;
+				if (value.GetType().IsAssignableFrom(typeof(T)))
+					return (T)value;
 			}
 			return default(T);
 		}

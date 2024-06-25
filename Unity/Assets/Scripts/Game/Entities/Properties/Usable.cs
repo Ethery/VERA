@@ -3,11 +3,35 @@ using UnityEngine.Events;
 
 public class Usable : EntityProperty
 {
+	public bool IsUsed => m_user != null;
+	public Entity User => m_user;
+
 	public void Use(Entity source)
 	{
-		OnUse.Invoke(source);
+		if (m_user == null && source != null)
+		{
+			m_user = source;
+			if (OnUse != null)
+			{
+				OnUse.Invoke(source, true);
+			}
+		}
+	}
+
+	public void UnUse(Entity source)
+	{
+		if (m_user == source)
+		{
+			m_user = null;
+			if (OnUse != null)
+			{
+				OnUse.Invoke(source, false);
+			}
+		}
 	}
 
 	[SerializeField]
-	public UnityAction<Entity> OnUse;
+	public Entity m_user;
+	[SerializeField]
+	public UnityAction<Entity, bool> OnUse;
 }
