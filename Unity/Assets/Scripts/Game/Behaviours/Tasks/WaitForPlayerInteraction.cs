@@ -3,15 +3,15 @@ using UnityTools.AI.BehaviourTree.Tasks;
 
 public class WaitForPlayerInteraction : IfElseCondition
 {
-	public WaitForPlayerInteraction(Task trueTask, Task falseTask) : base(trueTask, falseTask)
-	{
-		ConditionFunction = IsUsed;
-	}
+    public WaitForPlayerInteraction(Task trueTask, Task falseTask) : base(trueTask, falseTask)
+    {
+    }
 
-	private bool IsUsed(Blackboard blackboard)
+    protected override bool CheckCondition(Blackboard blackboard)
 	{
 		Entity thisEntity = blackboard.GetValue<Entity>(AiEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
-		return thisEntity.GetProperty<Usable>().IsUsed;
+		bool isUsed = thisEntity.GetProperty<Usable>().IsUsed;
+		return isUsed;
 	}
 
 }

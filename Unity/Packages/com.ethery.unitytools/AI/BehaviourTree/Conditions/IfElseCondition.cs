@@ -3,7 +3,7 @@ using System;
 namespace UnityTools.AI.BehaviourTree.Tasks
 {
 	[Serializable]
-	public class IfElseCondition : Task
+	public abstract class IfElseCondition : Task
 	{
 		public IfElseCondition(Task trueTask, Task falseTask)
 		{
@@ -11,15 +11,12 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			FalseTask = falseTask;
 		}
 
-		public IfElseCondition(ConditionToCheckEvaluator condition, Task trueTask, Task falseTask) : this(trueTask, falseTask)
-		{
-			ConditionFunction = condition;
-		}
+		protected abstract bool CheckCondition(Blackboard blackboard);
 
 		public sealed override ETaskStatus Tick(Blackboard blackboard)
 		{
 			Task taskToRun = null;
-			m_lastValue = ConditionFunction(blackboard);
+			m_lastValue = CheckCondition(blackboard);
 
 			if (m_lastValue)
 			{

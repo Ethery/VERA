@@ -27,6 +27,15 @@ namespace UnityTools.AI.BehaviourTree
 			}
 			return default(T);
 		}
+		
+		public object GetValue(string key)
+		{
+			if (Values.TryGetValue(key, out object value))
+			{
+				return value;
+			}
+			return null;
+		}
 
 		public Dictionary<string, object> Values = new Dictionary<string, object>();
 	}

@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entity: {fileID: 1106905228}
-  m_UsedObjectAnchor: {fileID: 2075338934}
+  m_usedObject: {fileID: 0}
   m_useObjectInput:
     m_name: UseItem
     m_mapName: General
@@ -579,6 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entity: {fileID: 157335227}
+  m_user: {fileID: 0}
 --- !u!1 &2065817913
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,11 +702,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2075338934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7376129016179243002, guid: d64aee8dc5db106459e05abeb00f128a, type: 3}
-  m_PrefabInstance: {fileID: 7620367307458783792}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1451538949441959519
 PrefabInstance:
   m_ObjectHideFlags: 0
