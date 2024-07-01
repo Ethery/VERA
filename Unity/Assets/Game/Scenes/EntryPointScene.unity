@@ -750,6 +750,10 @@ PrefabInstance:
       propertyPath: m_properties.Array.data[1]
       value: 
       objectReference: {fileID: 1799676100}
+    - target: {fileID: 5681086974588551510, guid: 70c533c10eb6a384c8e2b0d0467d9748, type: 3}
+      propertyPath: m_properties.Array.data[2]
+      value: 
+      objectReference: {fileID: 1799676100}
     - target: {fileID: 6596285379831619834, guid: 70c533c10eb6a384c8e2b0d0467d9748, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.01

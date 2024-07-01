@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityTools.AI.BehaviourTree;
 
 public class AiEntityProperty : EntityProperty
@@ -18,9 +20,22 @@ public class AiEntityProperty : EntityProperty
 		m_behaviourTree.GetBehaviourTree().Execute(m_blackboard);
 	}
 
-	[SerializeField]
-	protected BehaviourTreePicker m_behaviourTree = new BehaviourTreePicker();
+    public bool MoveTo(Vector3 target)
+    {
+		if(TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
+		{
+			agent.SetDestination(target);
+			if(agent.stoppingDistance > Vector3.Distance(agent.transform.position,target))
+			{
+				return true;			
+			}
+		}
+		return false;
+    }
 
-	[SerializeField]
+    [SerializeField]
+    protected BehaviourTreePicker m_behaviourTree = new BehaviourTreePicker();
+
+    [SerializeField]
 	private Blackboard m_blackboard;
 }

@@ -9,15 +9,24 @@ public class ClientBehaviourTree : BehaviourTree
 		{
 			if (m_root == null)
 			{
-				Sequence rootSequence = new Sequence();
-
-				//Find table
-				rootSequence.SubTasks.Add(new SetEntityWithIdentifierInBlackBoard("Table", "Table"));
-
-
-
-				rootSequence.SubTasks.Add(new WaitForPlayerInteraction(new SetBlackBoardValue("PlayerInteraction",true), new SetBlackBoardValue("PlayerInteraction", false)));
-				rootSequence.SubTasks.Add(new CheckBlackBoardValue("PlayerInteraction",true, new LogTask("checked Interaction success"), new LogTask("checked Interaction fail")));
+				Sequence rootSequence = new Sequence()
+				{
+					SubTasks = new System.Collections.Generic.List<Task>()
+					{
+						//Find table
+                        new SetEntityWithIdentifierInBlackBoard("Table", "Table"),
+						new WaitForPlayerInteraction
+							(
+								new SetBlackBoardValue("PlayerInteraction", true),
+								new SetBlackBoardValue("PlayerInteraction", false)
+							),
+						new CheckBlackBoardValue
+							("PlayerInteraction",true,
+								new LogTask("checked Interaction success"),
+								new LogTask("checked Interaction fail")
+							)
+                    }
+				};
 
 				m_root = rootSequence;
 			}

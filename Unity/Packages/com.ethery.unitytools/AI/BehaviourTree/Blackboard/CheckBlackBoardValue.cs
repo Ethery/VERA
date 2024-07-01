@@ -12,7 +12,6 @@ namespace UnityTools.AI.BehaviourTree.Tasks
         {
             Key = key;
             Value = valueToCheck;
-
         }
 
         protected override bool CheckCondition(Blackboard blackboard)
