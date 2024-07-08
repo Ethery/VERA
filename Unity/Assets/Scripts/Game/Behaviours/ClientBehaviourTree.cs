@@ -1,4 +1,5 @@
-﻿using UnityTools.AI.BehaviourTree;
+﻿using UnityEngine.InputSystem.Haptics;
+using UnityTools.AI.BehaviourTree;
 using UnityTools.AI.BehaviourTree.Tasks;
 
 public class ClientBehaviourTree : BehaviourTree
@@ -15,17 +16,19 @@ public class ClientBehaviourTree : BehaviourTree
 					{
 						//Find table
                         new SetEntityWithIdentifierInBlackBoard("Table", "Table"),
+                        new SetEntityWithIdentifierInBlackBoard(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER, IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER),
 						new WaitForPlayerInteraction
 							(
-								new SetBlackBoardValue("PlayerInteraction", true),
-								new SetBlackBoardValue("PlayerInteraction", false)
+								true
+								, new SetBlackBoardValue("PlayerInteraction", true)
+								, new SetBlackBoardValue("PlayerInteraction", false)
 							),
 						new CheckBlackBoardValue
-							("PlayerInteraction",true,
-								new LogTask("checked Interaction success"),
-								new LogTask("checked Interaction fail")
+							("PlayerInteraction",true
+								, new MoveToTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
+								, new IdleEntityTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
 							)
-                    }
+                    } 
 				};
 
 				m_root = rootSequence;

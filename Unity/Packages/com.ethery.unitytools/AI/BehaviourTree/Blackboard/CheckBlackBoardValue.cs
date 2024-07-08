@@ -20,7 +20,8 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 
             if(value!= null)
             {
-                return value == Value;
+                bool result = value.Equals(Value);
+                return result;
             }
             else
             {

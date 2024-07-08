@@ -5,8 +5,8 @@ namespace UnityTools.AI.BehaviourTree
 {
 	[Serializable]
 	public class BehaviourTree
-	{
-		public virtual Task Root { get; }
+    {
+        public virtual Task Root { get; }
 
 		public ETaskStatus Execute(Blackboard blackboard)
 		{

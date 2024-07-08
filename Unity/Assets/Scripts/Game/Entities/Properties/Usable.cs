@@ -11,6 +11,7 @@ public class Usable : EntityProperty
 		if (m_user == null && source != null)
 		{
 			m_user = source;
+			Debug.Log($"{nameof(Usable)} used by {source}");
 			if (OnUse != null)
 			{
 				OnUse.Invoke(source, true);
@@ -23,7 +24,8 @@ public class Usable : EntityProperty
 		if (m_user == source)
 		{
 			m_user = null;
-			if (OnUse != null)
+            Debug.Log($"{nameof(Usable)} no longer used by {source}");
+            if (OnUse != null)
 			{
 				OnUse.Invoke(source, false);
 			}

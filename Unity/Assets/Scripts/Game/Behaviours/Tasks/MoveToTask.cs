@@ -10,11 +10,15 @@ public class MoveToTask : Task
 
     public override ETaskStatus Tick(Blackboard blackboard)
     {
-        Entity thisEntity = blackboard.GetValue<Entity>(AiEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
-        AiEntityProperty aiProperty = thisEntity?.GetComponent<AiEntityProperty>();
+        Entity thisEntity = blackboard.GetValue<Entity>(AIEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
+        AIEntityProperty aiProperty = thisEntity?.GetComponent<AIEntityProperty>();
         if (aiProperty != null)
         {
-            if (aiProperty.MoveTo(blackboard.GetValue<Vector3>(m_targetNameInBlackboard)))
+            Entity target = blackboard.GetValue<Entity>(m_targetNameInBlackboard);
+
+            bool moveToResult = aiProperty.MoveTo(target.gameObject.transform.position);
+            Debug.Log($"{nameof(MoveToTask)} : {moveToResult}");
+            if (moveToResult)
             {
                 return ETaskStatus.Success;
             }
