@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityTools.Systems.Inputs;
 
@@ -18,14 +19,13 @@ public class InputControl : EntityProperty
 
 	private void LateUpdate()
 	{
-		Vector3 velocity = m_moveDirection * (m_sprinting ? m_sprintSpeed : m_speed);
-		velocity.y = Entity.GetComponent<Rigidbody>().velocity.y;
-		Entity.GetComponent<Rigidbody>().velocity = velocity;
-
-		if(m_moveDirection.sqrMagnitude > COMPARISON_EPSILON * COMPARISON_EPSILON)
-		{
-			Entity.transform.forward = m_moveDirection;
-		}
+		Entity.GetComponent<NavMeshAgent>().SetDestination(Entity.transform.position + m_moveDirection);
+		Entity.GetComponent<NavMeshAgent>().speed = m_sprinting ? m_sprintSpeed : m_speed;
+		/*		if (m_moveDirection.sqrMagnitude > COMPARISON_EPSILON * COMPARISON_EPSILON)
+				{
+					Entity.transform.forward = m_moveDirection;
+				}
+		*/
 	}
 
 	private void OnDestroy()
