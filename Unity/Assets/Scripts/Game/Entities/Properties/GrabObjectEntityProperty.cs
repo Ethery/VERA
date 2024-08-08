@@ -12,24 +12,11 @@ public class GrabObjectEntityProperty : EntityProperty
 	{
 		m_availableGrabbablesSqrRanges = new Dictionary<Grabbable, float>();
 		InputManager.RegisterInput(m_grabObjectInput, new InputManager.InputEvent(OnGrabObject_Performed, InputActionPhase.Performed), true);
-		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Performed, InputActionPhase.Performed), true);
 	}
 
 	private void OnDestroy()
 	{
 		InputManager.RegisterInput(m_grabObjectInput, new InputManager.InputEvent(OnGrabObject_Performed, InputActionPhase.Performed), false);
-		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Performed, InputActionPhase.Performed), false);
-	}
-
-	private void OnUseObject_Performed(InputAction action)
-	{
-		if(m_grabbedObject != null)
-		{
-			if(m_grabbedObject.Entity.TryGetProperty(out Usable usable))
-			{
-				usable.Use();
-			}
-		}
 	}
 
 	private void OnGrabObject_Performed(InputAction obj)
@@ -95,6 +82,4 @@ public class GrabObjectEntityProperty : EntityProperty
 	private Transform m_grabbedObjectAnchor;
 	[SerializeField]
 	private InputManager.Input m_grabObjectInput;
-	[SerializeField]
-	private InputManager.Input m_useObjectInput;
 }

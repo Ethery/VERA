@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,13 @@ public abstract class EntityProperty : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns>true if it's stopped, false if it need running in later frames.</returns>
+	public virtual bool Stop() { return true; }
+
 	[SerializeField]
 	private Entity m_entity;
+
 }

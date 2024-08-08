@@ -1,13 +1,8 @@
 {
-    "name": "UnityTools.Editor",
+    "name": "UnityTools.AI.BehaviourTree",
     "rootNamespace": "",
-    "references": [
-        "GUID:95ee4911e5d168b488af44c41f0432b6",
-        "GUID:75469ad4d38634e559750d17036d5f7c"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
