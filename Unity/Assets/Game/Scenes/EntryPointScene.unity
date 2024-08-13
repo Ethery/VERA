@@ -179,8 +179,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 5
+  far clip plane: 50
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cameraMoveInput:
     m_name: Move camera
-    m_mapName: Camera
+    m_mapName: General
   m_cameraSpeedUpInput:
     m_name: 
     m_mapName: 
@@ -631,7 +631,7 @@ MonoBehaviour:
     m_mapName: 
   m_cameraDragInput:
     m_name: DragCamera
-    m_mapName: Camera
+    m_mapName: General
   m_cameraMaxSpeed: 10
   m_cameraMinSpeed: 0.5
   m_cameraBaseSpeed: 5

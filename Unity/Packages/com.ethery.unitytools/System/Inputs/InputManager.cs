@@ -147,7 +147,8 @@ namespace UnityTools.Systems.Inputs
 			{
 				foreach(InputAction action in map.actions)
 				{
-					m_inputs.Add(action.name, new Input(action.name, map.name));
+					Input input = new Input(action.name, map.name);
+					m_inputs.Add(input.ToString(), input);
 					Debug.Log($"Added Input {action.name} to {nameof(InputManager)}.{nameof(m_inputs)}");
 				}
 			}
@@ -160,9 +161,11 @@ namespace UnityTools.Systems.Inputs
 			if(IsMouseOnUI())
 				return;
 
-			if(m_inputs.ContainsKey(obj.action.name))
+			string inputString = $"{obj.action.actionMap.name}.{obj.action.name}";
+
+            if (m_inputs.ContainsKey(inputString))
 			{
-				Input input = m_inputs[obj.action.name];
+				Input input = m_inputs[inputString];
 				if(m_events.ContainsKey(input))
 				{
 					foreach(InputEvent eventToCall in m_events[input])

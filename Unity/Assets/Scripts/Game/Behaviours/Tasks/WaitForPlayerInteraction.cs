@@ -19,7 +19,6 @@ public class WaitForPlayerInteraction : IfElseCondition
 				m_currentToggleValue = !m_currentToggleValue;
 			isUsed = m_currentToggleValue;
         }
-		Debug.Log($"{nameof(WaitForPlayerInteraction)} is used = {isUsed}");
 		return isUsed;
 	}
 
