@@ -179,8 +179,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 5
+  far clip plane: 50
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -219,37 +219,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8692714385834714988, guid: 89285800df24fe74384f1e0865d10cd2, type: 3}
   m_PrefabInstance: {fileID: 8310535924167740696}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &322896964
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 322896965}
-  m_Layer: 0
-  m_Name: debugTransform
-  m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &322896965
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322896964}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.48, y: 1.36, z: 13.86}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &776488923
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +498,7 @@ GameObject:
   - component: {fileID: 2065817916}
   - component: {fileID: 2065817915}
   - component: {fileID: 2065817914}
+  - component: {fileID: 2065817919}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -638,6 +608,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2065817919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065817913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a54c0d76d67574b904ea72dfc43619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cameraMoveInput:
+    m_name: Move camera
+    m_mapName: General
+  m_cameraSpeedUpInput:
+    m_name: 
+    m_mapName: 
+  m_cameraSpeedControlInput:
+    m_name: 
+    m_mapName: 
+  m_cameraDragInput:
+    m_name: DragCamera
+    m_mapName: General
+  m_cameraMaxSpeed: 10
+  m_cameraMinSpeed: 0.5
+  m_cameraBaseSpeed: 5
+  m_cameraSpeedMultiplier: 2
 --- !u!1001 &1451538949441959519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -858,4 +856,3 @@ SceneRoots:
   - {fileID: 2065817918}
   - {fileID: 54933692}
   - {fileID: 1451538949441959519}
-  - {fileID: 322896965}
