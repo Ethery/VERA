@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CustomPropertyDrawer(typeof(ScenePicker))]
 public class ScenePickerDrawer : PropertyDrawer
@@ -43,10 +44,35 @@ public class ScenePickerDrawer : PropertyDrawer
 
         currentIndex = EditorGUI.Popup(position, currentIndex, m_scenesNames.ToArray());
 
-        m_sceneIdProperty.stringValue = m_scenesNames[currentIndex];
+        EnsureSceneIsInBuildSettings(m_scenesNames[currentIndex]);
+        
+		m_sceneIdProperty.stringValue = m_scenesNames[currentIndex];
 
         property.serializedObject.ApplyModifiedProperties();
     }
+
+    private void EnsureSceneIsInBuildSettings(string scenePath)
+    {
+		bool canLoad = false;
+
+		List<EditorBuildSettingsScene> editorBuildSettingsScenes = new List<EditorBuildSettingsScene>();
+
+		for (int i = 0; i < EditorBuildSettings.scenes.Length; i++)
+		{
+			if (!string.IsNullOrEmpty(scenePath))
+                editorBuildSettingsScenes.Add(EditorBuildSettings.scenes[i]);
+			if (EditorBuildSettings.scenes[i].path == scenePath)
+			{
+				canLoad = true;
+			}
+		}
+		if (!canLoad)
+		{
+			editorBuildSettingsScenes.Add(new EditorBuildSettingsScene(scenePath, true));
+		}
+
+		EditorBuildSettings.scenes = editorBuildSettingsScenes.ToArray();
+	}
 
 	string[] m_scenesIDs = null;
     List<string> m_scenesNames;
