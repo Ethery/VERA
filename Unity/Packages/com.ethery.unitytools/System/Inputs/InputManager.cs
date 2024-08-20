@@ -91,6 +91,11 @@ namespace UnityTools.Systems.Inputs
 
 		public static void RegisterInput(Input input, InputEvent eventToCall, bool register)
 		{
+			if (Instance == null)
+			{
+				//Debug.LogError($"Can't register Input because InputManager Instance is null");
+				return;
+			}
 			if(register)
 			{
 				if(Instance.m_events.ContainsKey(input))
@@ -119,14 +124,6 @@ namespace UnityTools.Systems.Inputs
 							Debug.Log($"Unregistered event on {input}");
 						}
 					}
-					else
-					{
-						UnityEngine.Debug.LogError($"Can't remove an inexistant event in {input} event List");
-					}
-				}
-				else
-				{
-					UnityEngine.Debug.LogError($"Can't remove an inexistant event for {input}");
 				}
 			}
 		}

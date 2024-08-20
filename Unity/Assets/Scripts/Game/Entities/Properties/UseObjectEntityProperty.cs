@@ -9,8 +9,24 @@ public class UseObjectEntityProperty : EntityProperty
 	private void Start()
 	{
 		m_availableUsablesSqrRanges = new Dictionary<Usable, float>();
+	}
+
+	private void Awake()
+	{
+		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Performed, InputActionPhase.Performed), false);
+		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Canceled, InputActionPhase.Canceled), false);
+	}
+
+	private void OnEnable()
+	{
 		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Performed, InputActionPhase.Performed), true);
 		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Canceled, InputActionPhase.Canceled), true);
+	}
+
+	private void OnDisable()
+	{
+		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Performed, InputActionPhase.Performed), false);
+		InputManager.RegisterInput(m_useObjectInput, new InputManager.InputEvent(OnUseObject_Canceled, InputActionPhase.Canceled), false);
 	}
 
 	private void OnDestroy()
