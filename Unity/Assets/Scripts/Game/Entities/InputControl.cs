@@ -19,13 +19,11 @@ public class InputControl : EntityProperty
 
 	private void LateUpdate()
 	{
-		Entity.GetComponent<NavMeshAgent>().SetDestination(Entity.transform.position + m_moveDirection);
+		if (!Entity.GetComponent<NavMeshAgent>().isStopped)
+		{
+			Entity.GetComponent<NavMeshAgent>().SetDestination(Entity.transform.position + m_moveDirection);
+		}
 		Entity.GetComponent<NavMeshAgent>().speed = m_sprinting ? m_sprintSpeed : m_speed;
-		/*		if (m_moveDirection.sqrMagnitude > COMPARISON_EPSILON * COMPARISON_EPSILON)
-				{
-					Entity.transform.forward = m_moveDirection;
-				}
-		*/
 	}
 
 	private void OnDestroy()
@@ -38,11 +36,13 @@ public class InputControl : EntityProperty
 	{
 		Vector2 inputDirection = inputAction.ReadValue<Vector2>().normalized;
 		m_moveDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
+		Entity.GetComponent<NavMeshAgent>().isStopped = false;
 	}
 
 	public void OnMoveInput_Canceled(InputAction inputAction)
 	{
 		m_moveDirection = Vector3.zero;
+		Entity.GetComponent<NavMeshAgent>().isStopped = true;
 	}
 
 	public void OnSprintInput_Performed(InputAction inputAction)
@@ -53,6 +53,11 @@ public class InputControl : EntityProperty
 	public void OnSprintInput_Canceled(InputAction inputAction)
 	{
 		m_sprinting = false;
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawLine(Entity.transform.position, Entity.transform.position + m_moveDirection);
 	}
 
 	[NonSerialized]

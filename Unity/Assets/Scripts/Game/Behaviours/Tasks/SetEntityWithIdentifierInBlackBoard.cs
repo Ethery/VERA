@@ -26,6 +26,7 @@ public class SetEntityWithIdentifierInBlackBoard : Task
 		}
 		else
 		{
+			Debug.LogError($"No entity found with identifier {m_identifier}");
 			return ETaskStatus.Failed;
 		}
 	}

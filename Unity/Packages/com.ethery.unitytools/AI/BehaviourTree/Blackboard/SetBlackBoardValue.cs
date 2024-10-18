@@ -28,7 +28,12 @@ namespace UnityTools.AI.BehaviourTree.Tasks
             }
         }
 
-        public string Key;
+		public override string ToString()
+		{
+			return $"{base.ToString()} {Value} to {Key}";
+		}
+
+		public string Key;
         public object Value;
     }
 }

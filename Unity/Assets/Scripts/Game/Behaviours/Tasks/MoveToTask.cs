@@ -17,6 +17,7 @@ public class MoveToTask : Task
             Entity target = blackboard.GetValue<Entity>(m_targetNameInBlackboard);
 
             bool moveToResult = aiProperty.MoveTo(target.gameObject.transform.position);
+            
             Debug.Log($"{nameof(MoveToTask)} : {moveToResult}");
             if (moveToResult)
             {

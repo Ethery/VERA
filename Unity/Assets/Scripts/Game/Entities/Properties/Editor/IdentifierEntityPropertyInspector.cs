@@ -27,7 +27,6 @@ public class IdentifierEntityPropertyInspector : Editor
         m_foundIndex = EditorGUILayout.Popup(m_foundIndex, m_values.ToArray());
         if(m_foundIndex == 0)
         {
-            m_identifierProperty.stringValue = string.Empty;
             EditorGUILayout.PropertyField(m_identifierProperty);
         }
         else

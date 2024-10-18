@@ -132,9 +132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6596285379831619834}
   - component: {fileID: 5681086974588551510}
+  - component: {fileID: 8648222202625930085}
   - component: {fileID: 480376318466812805}
   - component: {fileID: 730565628708337883}
-  - component: {fileID: 8648222202625930085}
   m_Layer: 0
   m_Name: Client
   m_TagString: Untagged
@@ -173,6 +173,21 @@ MonoBehaviour:
   m_properties:
   - {fileID: 8648222202625930085}
   - {fileID: 1622950788950252186}
+--- !u!114 &8648222202625930085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8017132120640751194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f631d62e096e0be4fade703db7235473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_entity: {fileID: 5681086974588551510}
+  m_behaviourTree:
+    typeName: ClientBehaviourTree
 --- !u!195 &480376318466812805
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -211,18 +226,3 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &8648222202625930085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8017132120640751194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f631d62e096e0be4fade703db7235473, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_entity: {fileID: 5681086974588551510}
-  m_behaviourTree:
-    typeName: ClientBehaviourTree
