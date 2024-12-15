@@ -1,11 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityTools.Systems.Inputs;
 
 [RequireComponent(typeof(Collider))]
 public class UseObjectEntityProperty : EntityProperty
 {
+	public bool CanUse(Entity entity)
+	{
+		if (entity.TryGetProperty<Usable>(out Usable _))
+		{
+			return ClosestUsable().Entity == entity;
+		}
+		return false;
+	}
+
 	private void Start()
 	{
 		m_availableUsablesSqrRanges = new Dictionary<Usable, float>();
@@ -37,16 +47,7 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnUseObject_Performed(InputAction obj)
 	{
-		Usable closestUsable = null;
-		float minDistance = float.MaxValue;
-		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
-		{
-			if (kvp.Value < minDistance)
-			{
-				closestUsable = kvp.Key;
-				minDistance = kvp.Value;
-			}
-		}
+		Usable closestUsable = ClosestUsable();
 		if (closestUsable != null)
 		{
 			Debug.Log($"Using {closestUsable.Entity} from {Entity}");
@@ -90,6 +91,21 @@ public class UseObjectEntityProperty : EntityProperty
 		{
 			m_availableUsablesSqrRanges.Remove(Usable);
 		}
+	}
+
+	private Usable ClosestUsable()
+	{
+		Usable closestUsable = null;
+		float minDistance = float.MaxValue;
+		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
+		{
+			if (kvp.Value < minDistance)
+			{
+				closestUsable = kvp.Key;
+				minDistance = kvp.Value;
+			}
+		}
+		return closestUsable;
 	}
 
 	//distances of all available Usebable entities and their squared distance (for comparison, don't need correct distance).

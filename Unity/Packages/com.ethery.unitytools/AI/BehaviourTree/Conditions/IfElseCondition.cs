@@ -33,6 +33,8 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			return ETaskStatus.Success;
 		}
 
+#if UNITY_EDITOR
+
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
@@ -43,7 +45,14 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			UnityEditor.EditorGUI.BeginDisabledGroup(m_lastValue == false);
 			UnityEditor.EditorGUI.indentLevel++;
 			{
-				TrueTask.OnInspectorGUI();
+				if (TrueTask == null)
+				{
+					UnityEditor.EditorGUILayout.LabelField(nameof(TrueTask),"null");
+				}
+				else
+				{
+					TrueTask?.OnInspectorGUI();
+				}
 			}
 			UnityEditor.EditorGUI.indentLevel--;
 			UnityEditor.EditorGUI.EndDisabledGroup();
@@ -53,12 +62,22 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			UnityEditor.EditorGUI.BeginDisabledGroup(m_lastValue == true);
 			UnityEditor.EditorGUI.indentLevel++;
 			{
-				FalseTask.OnInspectorGUI();
+				if (FalseTask == null)
+				{
+					UnityEditor.EditorGUILayout.LabelField(nameof(FalseTask), "null");
+				}
+				else
+				{
+					FalseTask?.OnInspectorGUI();
+				}
 			}
 			UnityEditor.EditorGUI.indentLevel--;
 			UnityEditor.EditorGUI.EndDisabledGroup();
 			UnityEditor.EditorGUILayout.EndVertical();
 		}
+
+
+#endif
 
 		private bool m_lastValue;
 
@@ -67,4 +86,6 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 		public Task TrueTask = null;
 		public Task FalseTask = null;
 	}
+
+
 }

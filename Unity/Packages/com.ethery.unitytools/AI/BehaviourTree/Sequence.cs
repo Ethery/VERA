@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityTools.AI.BehaviourTree.Tasks
 {
 	[Serializable]
-	public class Sequence : Task
+	public class Sequence : Task, IList<Task>
 	{
 		public sealed override ETaskStatus Tick(Blackboard blackboard)
 		{
@@ -33,6 +34,7 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			return ETaskStatus.Success;
 		}
 
+#if UNITY_EDITOR
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
@@ -52,9 +54,72 @@ namespace UnityTools.AI.BehaviourTree.Tasks
 			}
 			UnityEditor.EditorGUI.indentLevel--;
 		}
+#endif
+
 		[NonSerialized]
 		private Dictionary<Task, ETaskStatus> m_taskStatuses = new Dictionary<Task, ETaskStatus>();
+		
 		[SerializeField]
 		public List<Task> SubTasks = new List<Task>();
+
+		#region IList Implementations
+
+		public int Count => ((ICollection<Task>)SubTasks).Count;
+
+		public bool IsReadOnly => ((ICollection<Task>)SubTasks).IsReadOnly;
+
+		public Task this[int index] { get => ((IList<Task>)SubTasks)[index]; set => ((IList<Task>)SubTasks)[index] = value; }
+
+		public int IndexOf(Task item)
+		{
+			return ((IList<Task>)SubTasks).IndexOf(item);
+		}
+
+		public void Insert(int index, Task item)
+		{
+			((IList<Task>)SubTasks).Insert(index, item);
+		}
+
+		public void RemoveAt(int index)
+		{
+			((IList<Task>)SubTasks).RemoveAt(index);
+		}
+
+		public void Add(Task item)
+		{
+			((ICollection<Task>)SubTasks).Add(item);
+		}
+
+		public void Clear()
+		{
+			((ICollection<Task>)SubTasks).Clear();
+		}
+
+		public bool Contains(Task item)
+		{
+			return ((ICollection<Task>)SubTasks).Contains(item);
+		}
+
+		public void CopyTo(Task[] array, int arrayIndex)
+		{
+			((ICollection<Task>)SubTasks).CopyTo(array, arrayIndex);
+		}
+
+		public bool Remove(Task item)
+		{
+			return ((ICollection<Task>)SubTasks).Remove(item);
+		}
+
+		public IEnumerator<Task> GetEnumerator()
+		{
+			return ((IEnumerable<Task>)SubTasks).GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return ((IEnumerable)SubTasks).GetEnumerator();
+		}
+
+		#endregion
 	}
 }

@@ -1,9 +1,11 @@
-﻿using UnityEngine.InputSystem.Haptics;
+﻿using System.Linq;
+using UnityEngine.InputSystem.Haptics;
 using UnityTools.AI.BehaviourTree;
 using UnityTools.AI.BehaviourTree.Tasks;
 
 public class ClientBehaviourTree : BehaviourTree
 {
+	public const string TABLE_BLACKBOARD_IDENTIFIER = "Table";
 	public override Task Root
 	{
 		get
@@ -15,26 +17,67 @@ public class ClientBehaviourTree : BehaviourTree
 					SubTasks = new System.Collections.Generic.List<Task>()
 					{
 						//Find table
-                        new SetEntityWithIdentifierInBlackBoard("Table", "Table"),
-                        new SetEntityWithIdentifierInBlackBoard(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER, IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER),
-						new WaitForPlayerInteraction
-							(
-								true
-								, new SetBlackBoardValue("PlayerInteraction", true)
-								, new SetBlackBoardValue("PlayerInteraction", false)
-							),
-						new CheckBlackBoardValue
-							("PlayerInteraction",true
-								, new MoveToTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
-								, new IdleEntityTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
-							)
-                    } 
+                        SetTableInBlackboard,
+                        SetPlayerInBlackboard,
+						WaitForPlayerInteractionAndSetupBlackboardValue,
+						//HandlePlayerInteraction,
+						//new ScriptableTask(CheckIfTableIsNearAndSitToIt),
+                    }
 				};
 
 				m_root = rootSequence;
 			}
 			return m_root;
 		}
+	}
+
+	/// <summary>
+	/// All the tasks can be created static since the blackboard is supposed to store all the datas.
+	/// </summary>
+	private static SetEntityWithIdentifierInBlackBoard SetTableInBlackboard = new SetEntityWithIdentifierInBlackBoard("Table", TABLE_BLACKBOARD_IDENTIFIER);
+	private static SetEntityWithIdentifierInBlackBoard SetPlayerInBlackboard = new SetEntityWithIdentifierInBlackBoard(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER, IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER);
+	private static WaitForPlayerInteraction WaitForPlayerInteractionAndSetupBlackboardValue = new WaitForPlayerInteraction
+							(
+								isToggle: true,
+								trueTask: CheckNearTable,
+								falseTask: new IdleEntityTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
+							);
+
+	private static DelegableIfElseCondition CheckNearTable = new DelegableIfElseCondition(
+		ifElseDelegate: CheckIfTableIsNear,
+		trueTask: SitOnTable,
+		falseTask: FollowPlayer);
+
+
+	private static Sequence FollowPlayer = new Sequence()
+	{
+		SubTasks = new System.Collections.Generic.List<Task>()
+		{
+			new MoveToTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
+		}
+	};
+	
+	private static TaskFromDelegate SitOnTable = new TaskFromDelegate(SitOnTable_delegate);
+	private static ETaskStatus SitOnTable_delegate(Blackboard blackboard)
+	{
+		Entity thisEntity = blackboard.GetValue<Entity>(AIEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
+		Entity table = blackboard.GetValue<Entity>(TABLE_BLACKBOARD_IDENTIFIER);
+		EntityPlacement placement = table.GetProperty<EntityPlacement>();
+		placement.PlaceEntity(thisEntity);
+		if(placement.m_entitiesPlaced.Contains(thisEntity))
+		{
+			return ETaskStatus.Success;
+		}
+		return ETaskStatus.Failed;
+	}
+
+	private static bool CheckIfTableIsNear(Blackboard blackboard)
+	{
+		Entity thisEntity = blackboard.GetValue<Entity>(AIEntityProperty.THIS_BLACKBOARD_IDENTIFIER);
+		Entity table = blackboard.GetValue<Entity>(TABLE_BLACKBOARD_IDENTIFIER);
+
+		EntityPlacement placement = table.GetProperty<EntityPlacement>();
+		return thisEntity.GetProperty<UseObjectEntityProperty>().CanUse(table);
 	}
 
 	private Task m_root = null;
