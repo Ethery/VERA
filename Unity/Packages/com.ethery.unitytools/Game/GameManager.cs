@@ -8,28 +8,28 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public StateMachine<GameState> GameStates;
-    public string StartScene => m_startScene.ScenePath;
+	public StateMachine<GameState> GameStates;
+	public string StartScene => m_startScene.ScenePath;
 
-    public bool IsReady => m_isReady;
+	public bool IsReady => m_isReady;
 
 	protected override void Awake()
 	{
-        base.Awake();
-        m_isReady = false;
+		base.Awake();
+		m_isReady = false;
 	}
 
 	private void Start()
-    {
-        GameStates = new StateMachine<GameState>(new DefaultGameState());
-        m_isReady = true;
-    }
+	{
+		GameStates = new StateMachine<GameState>(new DefaultGameState());
+		m_isReady = true;
+	}
 
-    [NonSerialized]
-    private bool m_isReady = false;
+	[NonSerialized]
+	private bool m_isReady = false;
 
-    [SerializeField]
-    private ScenePicker m_startScene;
+	[SerializeField]
+	private ScenePicker m_startScene;
 }
 
 
