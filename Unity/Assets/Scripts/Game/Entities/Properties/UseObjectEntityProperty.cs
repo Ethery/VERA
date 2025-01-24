@@ -7,13 +7,23 @@ using UnityTools.Systems.Inputs;
 [RequireComponent(typeof(Collider))]
 public class UseObjectEntityProperty : EntityProperty
 {
-	public bool CanUse(Entity entity)
+	public bool CanUse(Entity entity,out Usable usable)
 	{
-		if (entity.TryGetProperty<Usable>(out Usable _))
+		if (entity.TryGetProperty(out usable))
 		{
 			return ClosestUsable().Entity == entity;
 		}
 		return false;
+	}
+
+	public void Use(Entity entity)
+	{
+		if(CanUse(entity, out Usable usable))
+		{
+			Debug.Log($"Using {entity} from {Entity}");
+			usable.Use(Entity);
+			m_usedObject = usable;
+		}
 	}
 
 	private void Start()
@@ -50,9 +60,7 @@ public class UseObjectEntityProperty : EntityProperty
 		Usable closestUsable = ClosestUsable();
 		if (closestUsable != null)
 		{
-			Debug.Log($"Using {closestUsable.Entity} from {Entity}");
-			closestUsable.Use(Entity);
-			m_usedObject = closestUsable;
+			Use(closestUsable.Entity);
 		}
 	}
 

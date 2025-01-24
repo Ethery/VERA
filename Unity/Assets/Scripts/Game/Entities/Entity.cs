@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.AI;
 
 public partial class Entity : MonoBehaviour
 {
@@ -39,6 +40,20 @@ public partial class Entity : MonoBehaviour
 		return finished;
 	}
 
-    [SerializeField]
+	public bool MoveTo(Vector3 target)
+	{
+		if (TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
+		{
+			agent.SetDestination(target);
+			if (agent.stoppingDistance > Vector3.Distance(agent.transform.position, target))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	[SerializeField]
 	private List<EntityProperty> m_properties;
 }

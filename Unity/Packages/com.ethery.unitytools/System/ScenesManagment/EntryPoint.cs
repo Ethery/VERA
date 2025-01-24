@@ -9,7 +9,7 @@ public class EntryPoint : MonoBehaviour
 
 	private void Update()
 	{
-		if(GameManager.Instance.IsReady)
+		if(GameManager.IsReady)
 		{
 			if (OverridedScenesToLoad != null && OverridedScenesToLoad.Count>0)
 			{

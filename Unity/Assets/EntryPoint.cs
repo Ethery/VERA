@@ -7,7 +7,7 @@ public class EntryPoint : MonoBehaviour
 {
 	private void Update()
 	{
-		if(GameManager.Instance.IsReady)
+		if(GameManager.IsReady)
 		{
 			SceneManager.LoadScene(GameManager.Instance.StartScene);
 		}

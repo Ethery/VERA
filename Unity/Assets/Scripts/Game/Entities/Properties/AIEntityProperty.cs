@@ -30,18 +30,6 @@ public class AIEntityProperty : EntityProperty
 		return true;
     }
 
-    public bool MoveTo(Vector3 target)
-    {
-		if(TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
-		{
-			agent.SetDestination(target);
-			if(agent.stoppingDistance > Vector3.Distance(agent.transform.position,target))
-			{
-				return true;			
-			}
-		}
-		return false;
-    }
 
     [SerializeField]
     protected BehaviourTreePicker m_behaviourTree = new BehaviourTreePicker();

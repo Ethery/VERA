@@ -77,7 +77,7 @@ public class ClientBehaviourTree : BehaviourTree
 		Entity table = blackboard.GetValue<Entity>(TABLE_BLACKBOARD_IDENTIFIER);
 
 		EntityPlacement placement = table.GetProperty<EntityPlacement>();
-		return thisEntity.GetProperty<UseObjectEntityProperty>().CanUse(table);
+		return thisEntity.GetProperty<UseObjectEntityProperty>().CanUse(table,out Usable _);
 	}
 
 	private Task m_root = null;

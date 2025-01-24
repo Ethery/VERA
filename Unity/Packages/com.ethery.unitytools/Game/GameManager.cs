@@ -6,12 +6,18 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : GameManager<GameManager>
 {
-	public StateMachine<GameState> GameStates;
-	public string StartScene => m_startScene.ScenePath;
 
-	public bool IsReady => m_isReady;
+}
+
+public abstract class GameManager<T> : Singleton<T> where T : MonoBehaviour
+{
+    public StateMachine<GameState> GameStates;
+
+    public string StartScene => m_startScene.ScenePath;
+
+    public static bool IsReady => m_isReady;
 
 	protected override void Awake()
 	{
@@ -25,8 +31,8 @@ public class GameManager : Singleton<GameManager>
 		m_isReady = true;
 	}
 
-	[NonSerialized]
-	private bool m_isReady = false;
+    [NonSerialized]
+	private static bool m_isReady = false;
 
 	[SerializeField]
 	private ScenePicker m_startScene;
