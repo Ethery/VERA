@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityTools.Game;
 
 public class EntryPoint : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class EntryPoint : MonoBehaviour
 
 	private void Update()
 	{
-		if(GameManager.IsReady)
+		if(GameManager.IsInstanced)
 		{
 			if (OverridedScenesToLoad != null && OverridedScenesToLoad.Count>0)
 			{

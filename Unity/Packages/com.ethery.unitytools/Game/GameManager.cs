@@ -6,36 +6,32 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : GameManager<GameManager>
+namespace UnityTools.Game
 {
 
-}
+public abstract class BaseGameRules : ScriptableObject
+{ }
 
-public abstract class GameManager<T> : Singleton<T> where T : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public StateMachine<GameState> GameStates;
+	public BaseGameRules GameRules => m_gameRules;
+
+
+	public StateMachine<GameState> GameStates;
 
     public string StartScene => m_startScene.ScenePath;
-
-    public static bool IsReady => m_isReady;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		m_isReady = false;
-	}
-
-	private void Start()
-	{
 		GameStates = new StateMachine<GameState>(new DefaultGameState());
-		m_isReady = true;
 	}
-
-    [NonSerialized]
-	private static bool m_isReady = false;
 
 	[SerializeField]
 	private ScenePicker m_startScene;
+
+	[SerializeField]
+	private BaseGameRules m_gameRules;
 }
 
 
@@ -57,4 +53,6 @@ public class DefaultGameState : GameState
 	public override void Tick(float deltaTime)
 	{
 	}
+}
+
 }

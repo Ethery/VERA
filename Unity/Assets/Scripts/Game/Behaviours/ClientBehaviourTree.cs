@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine.InputSystem.Haptics;
 using UnityTools.AI.BehaviourTree;
 using UnityTools.AI.BehaviourTree.Tasks;
 
@@ -18,7 +17,7 @@ public class ClientBehaviourTree : BehaviourTree
 					{
 						//Find table
                         SetTableInBlackboard,
-                        SetPlayerInBlackboard,
+						SetPlayerInBlackboard,
 						WaitForPlayerInteractionAndSetupBlackboardValue,
 						//HandlePlayerInteraction,
 						//new ScriptableTask(CheckIfTableIsNearAndSitToIt),
@@ -56,7 +55,7 @@ public class ClientBehaviourTree : BehaviourTree
 			new MoveToTask(IdentifierEntityProperty.Identifiers.PLAYER_BLACKBOARD_IDENTIFIER)
 		}
 	};
-	
+
 	private static TaskFromDelegate SitOnTable = new TaskFromDelegate(SitOnTable_delegate);
 	private static ETaskStatus SitOnTable_delegate(Blackboard blackboard)
 	{
@@ -64,7 +63,7 @@ public class ClientBehaviourTree : BehaviourTree
 		Entity table = blackboard.GetValue<Entity>(TABLE_BLACKBOARD_IDENTIFIER);
 		EntityPlacement placement = table.GetProperty<EntityPlacement>();
 		placement.PlaceEntity(thisEntity);
-		if(placement.m_entitiesPlaced.Contains(thisEntity))
+		if (placement.m_entitiesPlaced.Contains(thisEntity))
 		{
 			return ETaskStatus.Success;
 		}
@@ -77,7 +76,7 @@ public class ClientBehaviourTree : BehaviourTree
 		Entity table = blackboard.GetValue<Entity>(TABLE_BLACKBOARD_IDENTIFIER);
 
 		EntityPlacement placement = table.GetProperty<EntityPlacement>();
-		return thisEntity.GetProperty<UseObjectEntityProperty>().CanUse(table,out Usable _);
+		return thisEntity.GetProperty<UseObjectEntityProperty>().CanUse(table, out Usable _);
 	}
 
 	private Task m_root = null;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityTools.AI.BehaviourTree;
+using UnityTools.Game;
 
 public class ClientBehaviourEntityProperty : EntityProperty
 {
@@ -26,10 +27,10 @@ public class ClientBehaviourEntityProperty : EntityProperty
 
 	private void Start()
 	{
-		if (VeraGameManager.Instance != null)
+		if (GameManager.Instance != null)
 		{
 			GetComponent<Usable>().OnUse += IsUsed;
-			m_selectedDishId = UnityEngine.Random.Range(0, VeraGameManager.Instance.GameDatas.AvailableDishes.Count);
+			m_selectedDishId = UnityEngine.Random.Range(0, (GameManager.Instance.GameRules as GameRules).AvailableDishes.Count);
 		}
 	}
 
@@ -114,7 +115,7 @@ public class ClientBehaviourEntityProperty : EntityProperty
 		return true;
 	}
 
-	private Dish SelectedDish => VeraGameManager.Instance.GameDatas.AvailableDishes[m_selectedDishId];
+	private Dish SelectedDish => (GameManager.Instance.GameRules as GameRules).AvailableDishes[m_selectedDishId];
 
 	private Entity m_table = null;
 	private Entity m_player = null;

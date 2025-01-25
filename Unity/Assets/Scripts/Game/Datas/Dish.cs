@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Dish", menuName = "GameDatas/Dish")]
-public class Dish : GameData
+public class Dish : GameRules
 {
 	public int Price;
 	public Sprite Icon;
