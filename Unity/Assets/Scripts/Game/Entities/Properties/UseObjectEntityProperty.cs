@@ -11,19 +11,24 @@ public class UseObjectEntityProperty : EntityProperty
 	{
 		if (entity.TryGetProperty(out usable))
 		{
-			return ClosestUsable().Entity == entity;
+			Usable closestUsable = ClosestUsable();
+
+			if(closestUsable != null)
+				return ClosestUsable().Entity == entity;
 		}
 		return false;
 	}
 
-	public void Use(Entity entity)
+	public bool Use(Entity entity)
 	{
 		if(CanUse(entity, out Usable usable))
 		{
 			Debug.Log($"Using {entity} from {Entity}");
 			usable.Use(Entity);
 			m_usedObject = usable;
+			return true;
 		}
+		return false;
 	}
 
 	private void Start()
@@ -114,6 +119,16 @@ public class UseObjectEntityProperty : EntityProperty
 			}
 		}
 		return closestUsable;
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
+		{
+			Gizmos.color = ClosestUsable() == kvp.Key ? Color.green : Color.red;
+			Gizmos.DrawCube(kvp.Key.Entity.transform.position, Vector3.one);
+			Gizmos.DrawLine(kvp.Key.Entity.transform.position, Entity.transform.position);
+		}
 	}
 
 	//distances of all available Usebable entities and their squared distance (for comparison, don't need correct distance).

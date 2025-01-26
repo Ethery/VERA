@@ -46,11 +46,13 @@ public class ClientBehaviourEntityProperty : EntityProperty
 			case ClientState.WaitingToBePlaced: break;
 			case ClientState.FollowingPlayerToTable:
 				Entity.MoveTo(m_player.transform.position);
-				if (TryGetComponent(out UseObjectEntityProperty user))
+				if (Entity.TryGetProperty(out UseObjectEntityProperty user))
 				{
-					user.Use(m_table);
-					GoToNextState();
-					m_timeLeft = 1.5f; //1.5 second to select it's food.
+					if(user.Use(m_table))
+					{ 
+						GoToNextState();
+						m_timeLeft = 1.5f; //1.5 second to select it's food.
+					}
 				}
 				break;
 			case ClientState.ChoosingFood: 
@@ -104,6 +106,7 @@ public class ClientBehaviourEntityProperty : EntityProperty
 	public void GoToNextState()
 	{
 		m_currentState += 1;
+		Debug.Log($"Client Is now on State {(ClientState)m_currentState}");
 	}
 
 	public override bool Stop()

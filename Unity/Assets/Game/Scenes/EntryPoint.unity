@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_startScene:
     m_scenePath: Assets/Tests/Scenes/DebugScene1.unity
-  m_gameRules: {fileID: 0}
+  m_gameRules: {fileID: 11400000, guid: 1c97b7d546818cd47af6eed9d2126ce9, type: 2}
 --- !u!1001 &7537837269006094045
 PrefabInstance:
   m_ObjectHideFlags: 0
