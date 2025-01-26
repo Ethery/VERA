@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4881102046102912831}
-  - component: {fileID: 1873807340136948230}
+  - component: {fileID: 5369119180859391740}
   - component: {fileID: 6524019830408669585}
   - component: {fileID: 385835724573243950}
   - component: {fileID: 972920961645195829}
@@ -37,7 +37,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1873807340136948230
+--- !u!114 &5369119180859391740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,12 +46,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5621920151556864614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5524cc7e4aa9934ab83386b41040fe8, type: 3}
+  m_Script: {fileID: 11500000, guid: 457c7bdca2955ce4da2ce8a05b1e77b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_startScene:
-    m_scenePath: Assets/Game/Scenes/EntryPoint.unity
-  m_gameDatas: {fileID: 11400000, guid: 1c97b7d546818cd47af6eed9d2126ce9, type: 2}
+    m_scenePath: Assets/Tests/Scenes/DebugScene1.unity
+  m_gameRules: {fileID: 11400000, guid: 1c97b7d546818cd47af6eed9d2126ce9, type: 2}
 --- !u!114 &6524019830408669585
 MonoBehaviour:
   m_ObjectHideFlags: 0
