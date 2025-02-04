@@ -7,6 +7,8 @@ using UnityTools.Game;
 
 public class ClientBehaviourEntityProperty : EntityProperty
 {
+	public ClientState CurrentState => m_currentState;
+
 	public enum ClientState
 	{
 		WaitingToBePlaced, 
