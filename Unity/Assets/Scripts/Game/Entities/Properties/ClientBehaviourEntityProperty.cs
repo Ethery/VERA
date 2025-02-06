@@ -108,7 +108,7 @@ public class ClientBehaviourEntityProperty : EntityProperty
 	public void GoToNextState()
 	{
 		m_currentState += 1;
-		Debug.Log($"Client Is now on State {(ClientState)m_currentState}");
+		Debug.Log($"{Entity.name} Is now on State {(ClientState)m_currentState}");
 	}
 
 	public override bool Stop()
@@ -118,6 +118,14 @@ public class ClientBehaviourEntityProperty : EntityProperty
 			agent.isStopped = true;
 		}
 		return true;
+	}
+
+	private void OnDrawGizmos()
+	{
+		if (m_table != null)
+		{
+			Gizmos.DrawLine(m_table.transform.position, Entity.transform.position);
+		}
 	}
 
 	private Dish SelectedDish => (GameManager.Instance.GameRules as GameRules).AvailableDishes[m_selectedDishId];

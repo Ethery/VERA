@@ -39,8 +39,10 @@ public class InputManager_input_Drawer : PropertyDrawer
 	{
 		m_dropdownValuesForInput.Clear();
 
+		m_dropdownValuesForInput.Add("None",InputManager.Input.NONE);
 
 		List<string> values = new List<string>();
+		values.Add("None");
 		InputActionAsset asset = AssetDatabase.LoadAssetAtPath<InputActionAsset>(AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets($"t:{nameof(InputActionAsset)}")[0]));
 
 		foreach(InputActionMap map in asset.actionMaps)

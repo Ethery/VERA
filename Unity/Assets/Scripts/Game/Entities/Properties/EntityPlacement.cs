@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EntityPlacement : EntityProperty
 {
@@ -17,7 +18,7 @@ public class EntityPlacement : EntityProperty
 		for(int i= 0;i<m_entitiesPlaced.Length;i++)
 		{
 			Entity placedEntity = m_entitiesPlaced[i];
-			if(placedEntity == null)
+			if(placedEntity == null && firstEmptyPlaceIndex == -1)
 			{
 				firstEmptyPlaceIndex = i;
 				continue;
@@ -33,6 +34,18 @@ public class EntityPlacement : EntityProperty
 		{
 			m_entitiesPlaced[firstEmptyPlaceIndex] = entity;
 			entity.transform.position = m_places[firstEmptyPlaceIndex].transform.position;
+
+			NavMeshAgent agent = m_entitiesPlaced[firstEmptyPlaceIndex].GetComponentInChildren<NavMeshAgent>();
+			if (agent != null)
+			{
+				agent.enabled = false;
+			}
+
+			NavMeshObstacle obstacle = m_entitiesPlaced[firstEmptyPlaceIndex].GetComponentInChildren<NavMeshObstacle>();
+			if (obstacle != null)
+			{
+				obstacle.enabled = false;
+			}
 		}
 	}
 
@@ -47,6 +60,17 @@ public class EntityPlacement : EntityProperty
 		{
 			if (m_entitiesPlaced[i] == entity)
 			{
+				NavMeshAgent agent = m_entitiesPlaced[i].GetComponentInChildren<NavMeshAgent>();
+				if (agent != null)
+				{
+					agent.enabled = true;
+				}
+
+				NavMeshObstacle obstacle = m_entitiesPlaced[i].GetComponentInChildren<NavMeshObstacle>();
+				if (obstacle != null)
+				{
+					obstacle.enabled = true;
+				}
 				m_entitiesPlaced[i] = null;
 				break;
 			}
@@ -77,6 +101,7 @@ public class EntityPlacement : EntityProperty
 			if (m_entitiesPlaced[i] != null)
 			{
 				m_entitiesPlaced[i].transform.position = m_places[i].transform.position;
+				m_entitiesPlaced[i].transform.rotation = m_places[i].transform.rotation;
 			}
 		}
 	}
