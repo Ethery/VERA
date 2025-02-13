@@ -15,9 +15,10 @@ namespace UnityTools.Game
 		}
 
 		[SerializeField]
-		List<SpawnConfig> SpawnConfigs;
+		protected List<SpawnConfig> SpawnConfigs;
 
-		private int m_currentSpawnIndex;
+		protected int m_currentSpawnIndex;
+		protected T LastSpawned;
 
 		protected abstract bool CanSpawn();
 
@@ -33,6 +34,8 @@ namespace UnityTools.Game
 
 		public void Update()
 		{
+			if (!GameManager.IsInstanced)
+				return;
 			if (m_currentSpawnIndex < SpawnConfigs.Count)
 			{
 				if (CanSpawn())
@@ -50,7 +53,7 @@ namespace UnityTools.Game
 		{
 			SpawnConfig spawnable = SpawnConfigs[m_currentSpawnIndex];
 			Debug.Log($"Spawning {spawnable.Prefab.name}");
-			Instantiate(spawnable.Prefab, transform.position, transform.rotation, transform);
+			LastSpawned = Instantiate(spawnable.Prefab, transform.position, transform.rotation, transform);
 			m_currentSpawnIndex++;
 		}
 

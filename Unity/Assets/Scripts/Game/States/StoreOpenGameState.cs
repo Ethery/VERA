@@ -2,9 +2,8 @@ using StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityTools.Systems.UI;
 
-public class InGameGameState : GameState
+public class StoreOpenGameState : GameState
 {
 	public override bool CanTransitionTo(State requestedNewState)
 	{
@@ -13,7 +12,6 @@ public class InGameGameState : GameState
 
 	public override void OnEnter(State previousState)
 	{
-
 	}
 
 	public override void OnExit(State nextState)

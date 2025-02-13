@@ -5,19 +5,21 @@ using UnityTools.Game;
 
 public class ClientWave : Wave<Entity>
 {
-	bool canSpawn = false;
-	
-	public void AllowSpawn()
-	{
-		canSpawn = true;
-	}
-
 	protected override bool CanSpawn()
 	{
-		if(canSpawn)
+		if (GameManager.Instance.GameStates.CurrentState is StoreOpenGameState)
 		{
-			canSpawn = false;
-			return true;
+			if (LastSpawned == null)
+			{
+				return true;
+			}
+			else
+			{
+				if (LastSpawned.TryGetProperty<ClientBehaviourEntityProperty>(out ClientBehaviourEntityProperty client))
+				{
+				return client.CurrentState != ClientBehaviourEntityProperty.ClientState.WaitingToBePlaced;
+				}
+			}
 		}
 		return false;
 	}

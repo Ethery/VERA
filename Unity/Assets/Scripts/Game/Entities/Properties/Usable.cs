@@ -11,6 +11,7 @@ public class Usable : EntityProperty
 		{
 			OnUse.Invoke(source, true);
 		}
+		UsedEvent.Invoke();
 	}
 
 	public void UnUse(Entity source)
@@ -20,8 +21,11 @@ public class Usable : EntityProperty
 		{
 			OnUse.Invoke(source, false);
 		}
+		UsedEvent.Invoke();
 	}
 
 	[SerializeField]
 	public UnityAction<Entity, bool> OnUse;
+	[SerializeField]
+	public UnityEvent UsedEvent = new UnityEvent();
 }

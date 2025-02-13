@@ -27,6 +27,11 @@ public class GameManager : Singleton<GameManager>
 		GameStates = new StateMachine<GameState>(new DefaultGameState());
 	}
 
+	private void Update()
+	{
+		GameStates.Tick(Time.deltaTime);
+	}
+	
 	[SerializeField]
 	private ScenePicker m_startScene;
 
