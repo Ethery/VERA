@@ -15,6 +15,7 @@ public class InputControl : EntityProperty
 		InputManager.RegisterInput(m_moveInput, new InputManager.InputEvent(OnMoveInput_Canceled, InputActionPhase.Canceled), true);
 		InputManager.RegisterInput(m_sprintInput, new InputManager.InputEvent(OnSprintInput_Performed, InputActionPhase.Performed), true);
 		InputManager.RegisterInput(m_sprintInput, new InputManager.InputEvent(OnSprintInput_Canceled, InputActionPhase.Canceled), true);
+		Entity.GetComponent<NavMeshAgent>().updateRotation = false;
 	}
 
 	private void LateUpdate()
