@@ -17,9 +17,15 @@ namespace UnityTools.Game
 		[SerializeField]
 		protected List<SpawnConfig> SpawnConfigs;
 
+		[SerializeField]
+		protected Transform m_spawnPoint;
+
 		protected int m_currentSpawnIndex;
 		protected T LastSpawned;
 
+		/// <summary>
+		/// This is called each frame to check if the wave can spawn the next entity.
+		/// </summary>
 		protected abstract bool CanSpawn();
 
 		public void OnEnable()
@@ -45,7 +51,7 @@ namespace UnityTools.Game
 			}
 			else
 			{
-				gameObject.SetActive(false);
+				this.enabled = false;
 			}
 		}
 
@@ -53,7 +59,12 @@ namespace UnityTools.Game
 		{
 			SpawnConfig spawnable = SpawnConfigs[m_currentSpawnIndex];
 			Debug.Log($"Spawning {spawnable.Prefab.name}");
-			LastSpawned = Instantiate(spawnable.Prefab, transform.position, transform.rotation, transform);
+			if(m_spawnPoint == null)
+			{
+				Debug.LogWarning($"No spawn point referenced for {this}, using self to replace it.",this);
+				m_spawnPoint = transform;
+			}
+			LastSpawned = Instantiate(spawnable.Prefab, m_spawnPoint.position, m_spawnPoint.rotation, m_spawnPoint);
 			m_currentSpawnIndex++;
 		}
 

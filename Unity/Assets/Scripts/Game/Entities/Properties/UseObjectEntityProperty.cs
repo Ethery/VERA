@@ -81,7 +81,7 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable) && !m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
 			m_availableUsablesSqrRanges.Add(Usable, (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude);
 		}
@@ -89,18 +89,15 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable) && m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
-			if (m_availableUsablesSqrRanges.ContainsKey(Usable))
-			{
-				m_availableUsablesSqrRanges[Usable] = (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude;
-			}
+			m_availableUsablesSqrRanges[Usable] = (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude;
 		}
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.TryGetComponent(out Usable Usable))
+		if (other.TryGetComponent(out Usable Usable) && m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
 			m_availableUsablesSqrRanges.Remove(Usable);
 		}
