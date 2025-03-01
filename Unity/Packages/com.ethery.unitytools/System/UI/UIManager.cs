@@ -8,7 +8,7 @@ namespace UnityTools.Systems.UI
 {
 	public class UIManager<ETYPE> : Singleton<UIManager<ETYPE>>, ISerializationCallbackReceiver
 	{
-		public T Page<T>(int pageId) where T : Page
+		public T Page<T>(Guid pageId) where T : Page
 		{
 			return m_loaded[pageId] as T;
 		}
@@ -21,20 +21,21 @@ namespace UnityTools.Systems.UI
 
 		#region Datas
 		
-		private List<Page> m_loaded = new List<Page>();
+		private Dictionary<Guid, Page> m_loaded = new Dictionary<Guid, Page>();
 
 		#endregion
 
-		public int CreatePage(ETYPE page)
+		public Guid CreatePage(ETYPE page)
 		{
-			m_loaded.Add(Instantiate(m_prefabs[page], UICanvas));
-			return m_loaded.Count - 1;
+			Guid newId = Guid.NewGuid();
+			m_loaded.Add(newId, Instantiate(m_prefabs[page], UICanvas));
+			return newId;
 		}
 
-		public void DestroyPage(int pageId)
+		public void DestroyPage(Guid pageId)
 		{
 			Page page = Page<Page>(pageId);
-			m_loaded.RemoveAt(pageId);
+			m_loaded.Remove(pageId);
 			GameObject.Destroy(page.gameObject);
 		}
 
