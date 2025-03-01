@@ -100,8 +100,15 @@ public class EntityPlacement : EntityProperty
 		{
 			if (m_entitiesPlaced[i] != null)
 			{
-				m_entitiesPlaced[i].transform.position = m_places[i].transform.position;
-				m_entitiesPlaced[i].transform.rotation = m_places[i].transform.rotation;
+				if (!m_entitiesPlaced[i].gameObject.activeSelf)
+				{
+					UnplaceEntity(m_entitiesPlaced[i]);
+				}
+				else
+				{
+					m_entitiesPlaced[i].transform.position = m_places[i].transform.position;
+					m_entitiesPlaced[i].transform.rotation = m_places[i].transform.rotation;
+				}
 			}
 		}
 	}
