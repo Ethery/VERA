@@ -31,6 +31,13 @@ namespace UnityTools.Systems.UI
 			return m_loaded.Count - 1;
 		}
 
+		public void DestroyPage(int pageId)
+		{
+			Page page = Page<Page>(pageId);
+			m_loaded.RemoveAt(pageId);
+			GameObject.Destroy(page.gameObject);
+		}
+
 		public void OnBeforeSerialize()
 		{
 		}

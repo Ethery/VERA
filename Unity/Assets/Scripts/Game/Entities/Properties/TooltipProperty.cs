@@ -14,7 +14,7 @@ public class TooltipProperty : EntityProperty
 
 	private Tooltip Tooltip => UIManager.Instance.Page<Tooltip>(m_tooltipId);
 
-	private void Start()
+	private void OnEnable()
 	{
 		m_tooltipId = UIManager.Instance.CreatePage(m_tooltip);
 		Tooltip.BindToTransform(Entity.transform);
@@ -24,6 +24,11 @@ public class TooltipProperty : EntityProperty
 		{
 			entityTooltip.BindEntity(Entity);
 		}
+	}
+
+	private void OnDisable()
+	{
+		UIManager.Instance.DestroyPage(m_tooltipId);
 	}
 
 }
