@@ -152,7 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entity: {fileID: 5681086974588551510}
-  m_user: {fileID: 0}
+  UsedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7344423759283710162
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,8 +317,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entity: {fileID: 5681086974588551510}
-  m_behaviourTree:
-    typeName: ClientBehaviourTree
 --- !u!114 &4625292875804308495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +332,7 @@ MonoBehaviour:
   m_entity: {fileID: 5681086974588551510}
   m_tooltip: 0
   m_offset: {x: 0, y: 0, z: 0}
+  m_isTargetTooltip: 1
 --- !u!114 &7053254211645372014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,7 +346,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_entity: {fileID: 5681086974588551510}
-  m_user: {fileID: 0}
+  UsedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &480376318466812805
 NavMeshAgent:
   m_ObjectHideFlags: 0

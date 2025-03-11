@@ -8,6 +8,7 @@ namespace UnityTools.Systems.UI
 	public enum EPage
 	{
 		ClientTooltip,
+		IsTargetTooltip,
 
 	}
 

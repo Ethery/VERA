@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,21 +8,19 @@ using UnityTools.Systems.Inputs;
 [RequireComponent(typeof(Collider))]
 public class UseObjectEntityProperty : EntityProperty
 {
-	public bool CanUse(Entity entity,out Usable usable)
+	public bool CanUse(Entity entity, out Usable usable)
 	{
 		if (entity.TryGetProperty(out usable))
 		{
-			Usable closestUsable = ClosestUsable();
-
-			if(closestUsable != null)
-				return ClosestUsable().Entity == entity;
+			if (m_closestUsable != null)
+				return m_closestUsable.Entity == entity;
 		}
 		return false;
 	}
 
 	public bool Use(Entity entity)
 	{
-		if(CanUse(entity, out Usable usable))
+		if (CanUse(entity, out Usable usable))
 		{
 			Debug.Log($"Using {entity} from {Entity}");
 			usable.Use(Entity);
@@ -62,10 +61,9 @@ public class UseObjectEntityProperty : EntityProperty
 
 	private void OnUseObject_Performed(InputAction obj)
 	{
-		Usable closestUsable = ClosestUsable();
-		if (closestUsable != null)
+		if (m_closestUsable != null)
 		{
-			Use(closestUsable.Entity);
+			Use(m_closestUsable.Entity);
 		}
 	}
 
@@ -84,6 +82,7 @@ public class UseObjectEntityProperty : EntityProperty
 		if (other.TryGetComponent(out Usable Usable) && !m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
 			m_availableUsablesSqrRanges.Add(Usable, (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude);
+			OnAvailableUsableChanged();
 		}
 	}
 
@@ -92,6 +91,7 @@ public class UseObjectEntityProperty : EntityProperty
 		if (other.TryGetComponent(out Usable Usable) && m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
 			m_availableUsablesSqrRanges[Usable] = (Usable.Entity.transform.position - Entity.transform.position).sqrMagnitude;
+			OnAvailableUsableChanged();
 		}
 	}
 
@@ -100,29 +100,52 @@ public class UseObjectEntityProperty : EntityProperty
 		if (other.TryGetComponent(out Usable Usable) && m_availableUsablesSqrRanges.ContainsKey(Usable))
 		{
 			m_availableUsablesSqrRanges.Remove(Usable);
+			OnAvailableUsableChanged();
 		}
 	}
 
-	private Usable ClosestUsable()
+	private void OnAvailableUsableChanged()
 	{
-		Usable closestUsable = null;
+		Usable oldUsable = m_closestUsable;
+		if (FindClosestUsable())
+		{
+			if (m_closestUsable.Entity.TryGetProperty(out TooltipsProperty closestUsableTooltip))
+			{
+				closestUsableTooltip.SetAsTarget();
+			}
+		}
+		else
+		{
+			if (oldUsable != null)
+			{
+				if (oldUsable.Entity.TryGetProperty(out TooltipsProperty closestUsableTooltip))
+				{
+					closestUsableTooltip.UnsetAsTarget();
+				}
+			}
+		}
+	}
+
+	private bool FindClosestUsable()
+	{
+		m_closestUsable = null;
 		float minDistance = float.MaxValue;
 		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
 		{
 			if (kvp.Value < minDistance)
 			{
-				closestUsable = kvp.Key;
+				m_closestUsable = kvp.Key;
 				minDistance = kvp.Value;
 			}
 		}
-		return closestUsable;
+		return m_closestUsable != null;
 	}
 
 	private void OnDrawGizmosSelected()
 	{
 		foreach (KeyValuePair<Usable, float> kvp in m_availableUsablesSqrRanges)
 		{
-			Gizmos.color = ClosestUsable() == kvp.Key ? Color.green : Color.red;
+			Gizmos.color = FindClosestUsable() == kvp.Key ? Color.green : Color.red;
 			Gizmos.DrawCube(kvp.Key.Entity.transform.position, Vector3.one);
 			Gizmos.DrawLine(kvp.Key.Entity.transform.position, Entity.transform.position);
 		}
@@ -130,6 +153,9 @@ public class UseObjectEntityProperty : EntityProperty
 
 	//distances of all available Usebable entities and their squared distance (for comparison, don't need correct distance).
 	private Dictionary<Usable, float> m_availableUsablesSqrRanges = new Dictionary<Usable, float>();
+
+	[NonSerialized]
+	private Usable m_closestUsable = null;
 
 	[SerializeField]
 	private Usable m_usedObject;

@@ -20,7 +20,7 @@ namespace UnityTools.Systems.UI
 		private Transform UICanvas;
 
 		#region Datas
-		
+
 		private Dictionary<Guid, Page> m_loaded = new Dictionary<Guid, Page>();
 
 		#endregion
@@ -45,9 +45,9 @@ namespace UnityTools.Systems.UI
 
 		public void OnAfterDeserialize()
 		{
-			foreach(ETYPE type in Enum.GetValues(typeof(ETYPE)))
+			foreach (ETYPE type in Enum.GetValues(typeof(ETYPE)))
 			{
-				if(!m_prefabs.ContainsKey(type))
+				if (!m_prefabs.ContainsKey(type))
 				{
 					m_prefabs.Add(type, null);
 				}

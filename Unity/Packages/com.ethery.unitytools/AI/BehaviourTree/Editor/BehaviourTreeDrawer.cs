@@ -45,7 +45,10 @@ namespace UnityTools.AI.BehaviourTree
 				else
 				{
 					EditorGUI.LabelField(position, $"current type not found ({typeProperty.stringValue})");
-					typeProperty.stringValue = displayedOptions[0];
+					if (displayedOptions.Length > 0)
+						typeProperty.stringValue = displayedOptions[0];
+					else
+						typeProperty.stringValue = string.Empty;
 				}
 			}
 		}

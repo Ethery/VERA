@@ -29,12 +29,21 @@ namespace UnityTools.Systems.Collections
 		public void OnAfterDeserialize()
 		{
 			this.Clear();
-			
-			if (keys.Count != values.Count)
-				throw new System.Exception(string.Format($"there are {keys.Count} keys and {values.Count} values after deserialization. Make sure that both key and value types are serializable."));
-			
-			for (int i = 0; i < keys.Count && i< values.Count; i++)
-				this.Add(keys[i], values[i]); 
+
+			for (int i = 0; i < keys.Count && i < values.Count; i++)
+			{
+				TKey key = default(TKey);
+				if (i < keys.Count)
+				{
+					key = keys[i];
+				}
+				TValue value = default(TValue);
+				if (i < values.Count)
+				{
+					value = values[i];
+				}
+				this.Add(key, value);
+			}
 		}
 
 		public void AddDefaultValue()

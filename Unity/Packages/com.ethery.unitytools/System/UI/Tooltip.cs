@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace UnityTools.Systems.UI
 {
-    public abstract class Tooltip : Page
-    {
+	public class Tooltip : Page
+	{
 		Transform LinkedTransform;
 		Vector3 Offset;
 
@@ -22,9 +22,9 @@ namespace UnityTools.Systems.UI
 
 		public virtual void Update()
 		{
-			if(LinkedTransform != null)
+			if (LinkedTransform != null)
 			{
-				transform.position = Camera.main.WorldToScreenPoint(LinkedTransform.position);
+				transform.position = Camera.main.WorldToScreenPoint(LinkedTransform.position) + Offset;
 			}
 		}
 	}

@@ -11,7 +11,7 @@ public class ClientBehaviourEntityProperty : EntityProperty
 
 	public enum ClientState
 	{
-		WaitingToBePlaced, 
+		WaitingToBePlaced,
 		FollowingPlayerToTable,
 		ChoosingFood,
 		WaitingToOrder,
@@ -38,7 +38,7 @@ public class ClientBehaviourEntityProperty : EntityProperty
 
 	private void Update()
 	{
-		if(m_timeLeft > 0)
+		if (m_timeLeft > 0)
 		{
 			m_timeLeft -= Time.deltaTime;
 		}
@@ -50,17 +50,17 @@ public class ClientBehaviourEntityProperty : EntityProperty
 				Entity.MoveTo(m_player.transform.position);
 				if (Entity.TryGetProperty(out UseObjectEntityProperty user))
 				{
-					if(user.Use(m_table))
-					{ 
+					if (user.Use(m_table))
+					{
 						GoToNextState();
 						m_timeLeft = 1.5f; //1.5 second to select it's food.
 					}
 				}
 				break;
-			case ClientState.ChoosingFood: 
+			case ClientState.ChoosingFood:
 				//TODO anim to select food. (already picked in Start())
-				
-				if(m_timeLeft <=0)
+
+				if (m_timeLeft <= 0)
 				{
 					GoToNextState();
 				}
@@ -138,10 +138,4 @@ public class ClientBehaviourEntityProperty : EntityProperty
 	private int m_selectedDishId;
 
 	private float m_timeLeft;
-
-	[SerializeField]
-    protected BehaviourTreePicker m_behaviourTree = new BehaviourTreePicker();
-
-    [SerializeField]
-	private Blackboard m_blackboard;
 }
