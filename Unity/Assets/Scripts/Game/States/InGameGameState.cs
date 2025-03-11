@@ -13,7 +13,6 @@ public class InGameGameState : GameState
 
 	public override void OnEnter(State previousState)
 	{
-
 	}
 
 	public override void OnExit(State nextState)

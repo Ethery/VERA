@@ -94,6 +94,8 @@ public class ClientBehaviourEntityProperty : EntityProperty
 				case ClientState.ChoosingFood: break;
 				case ClientState.WaitingToOrder:
 					GoToNextState();
+
+					(VeraGameManager.Instance.GameStates.CurrentState as StoreOpenGameState).Kitchen.PlaceOrder(m_selectedDishId);
 					m_timeLeft = 20f; //20 seconds to eat.
 					break;
 				case ClientState.Eating: break;

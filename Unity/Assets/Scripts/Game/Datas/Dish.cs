@@ -7,4 +7,6 @@ public class Dish : ScriptableObject
 {
 	public int Price;
 	public Sprite Icon;
+	public GameObject Prefab;
+	public float TimeForPreparation;
 }
